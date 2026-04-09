@@ -38,7 +38,7 @@
       "url": "https://ccentre.website/",
       "logo": "https://ccentre.website/logo.svg",
       "image": "https://ccentre.website/og-image.jpg",
-      "telephone": "+595961234567",
+      "telephone": "+595961234567",  /* TODO: remplacer par le vrai numéro de contact */
       "email": "hola@ccentre.website",
       "address": {
         "@type": "PostalAddress",
@@ -72,12 +72,7 @@
       "url": "https://ccentre.website/",
       "name": "CCentre.website",
       "description": "Agencia digital — diseño web a medida para negocios en Paraguay",
-      "publisher": {"@id": "https://ccentre.website/#business"},
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://ccentre.website/?s={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "publisher": {"@id": "https://ccentre.website/#business"}
     },
     {
       "@type": "Service",
@@ -121,6 +116,7 @@
     {
       "@type": "AggregateRating",
       "@id": "https://ccentre.website/#rating",
+      "itemReviewed": {"@id": "https://ccentre.website/#business"},
       "ratingValue": "4.8",
       "reviewCount": "42",
       "bestRating": "5",
@@ -2515,7 +2511,7 @@ footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.06);padd
           </div>
           <p class="ecom-note">2% por venta o $20/mes si facturación &lt; $1.000</p>
         </div>
-        <button class="p-cta" style="margin-top:20px">Elegir STARTER →</button>
+        <button class="p-cta" style="margin-top:20px" onclick="goEmpezar('starter')">Elegir STARTER →</button>
       </div>
 
       <!-- CRECIMIENTO (FEATURED) -->
@@ -2559,7 +2555,7 @@ footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.06);padd
           </div>
           <p class="ecom-note">2% por venta o $20/mes si facturación &lt; $1.000</p>
         </div>
-        <button class="p-cta" style="margin-top:20px">Elegir BUSINESS →</button>
+        <button class="p-cta" style="margin-top:20px" onclick="goEmpezar('business')">Elegir BUSINESS →</button>
       </div>
       </div><!-- /p-card-wrap -->
 
@@ -2590,7 +2586,7 @@ footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.06);padd
           <li class="p-feat"><span class="chk"><svg viewBox="0 0 10 10" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,5.5 4,7.5 8,3"/></svg></span>Creación del sitio <span class="badge-incluida">incluida</span></li>
         </ul>
         <p style="font-size:12px;color:rgba(255,255,255,.45);text-align:center;margin-top:16px;line-height:1.6;padding:12px 8px;border-top:1px solid rgba(255,255,255,.08)">Propuesta detallada en 48h · Contrato flexible y sin permanencia · Un manager dedicado que conoce su negocio · Soporte prioritario garantizado</p>
-        <button class="p-cta" style="margin-top:12px">Solicitar ENTERPRISE →</button>
+        <button class="p-cta" style="margin-top:12px" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Solicitar ENTERPRISE →</button>
       </div>
       </div><!-- /p-card-wrap -->
 
@@ -3111,6 +3107,14 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 /* smooth scroll + navbar scroll — déclarés plus haut, pas de doublon */
+
+/* ── CTA PRICING → empezar.html ── */
+/* Lit l'état du toggle billing pour passer le bon paramètre à l'URL */
+function goEmpezar(plan){
+  var toggle = document.getElementById('billing-toggle');
+  var billing = (toggle && toggle.classList.contains('annual')) ? 'annual' : 'monthly';
+  window.location.href = 'empezar.html?plan=' + plan + '&billing=' + billing;
+}
 
 
 

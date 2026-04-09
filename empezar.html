@@ -260,9 +260,9 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
         <input class="field-input" type="text" id="sector-otro" placeholder="Ej: Veterinaria, Odontología...">
       </div>
       <div class="btn-row">
-        <button class="btn-back" onclick="goBack(1)">
+        <button class="btn-back" onclick="window.location.href='/'">
           <svg viewBox="0 0 16 16" fill="none"><path d="M12 8H4M7 5L4 8l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Volver
+          Volver al inicio
         </button>
         <button class="btn-next" onclick="goNext(1)">
           Continuar
@@ -297,7 +297,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
             <div class="option-text"><div class="option-main">Tuve uno pero ya no está activo</div></div>
           </label>
         </div>
-        <div class="cond show" id="cond-web-url">
+        <div class="cond" id="cond-web-url">
           <div class="cond-label">URL de su sitio actual</div>
           <input class="field-input" type="url" id="web-url" placeholder="https://www.sunegocio.com">
           <p class="field-hint">Lo analizamos para entender qué funciona hoy y qué mejorar.</p>
@@ -545,7 +545,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
   </div>
 
   <!-- ══ STEP 6 : ÚLTIMO PASO ══ -->
-  <div class="step" id="step-5"">
+  <div class="step" id="step-5">
     <h1 class="step-title">Último paso</h1>
     <p class="step-sub">Ya casi terminamos. Estos últimos detalles nos ayudan a priorizar y preparar mejor su proyecto.</p>
     <div class="form-card">
@@ -627,9 +627,28 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 
 <script>
 var WEBHOOK = 'https://hook.us2.make.com/9xmejzhe9c0up5kj8sgljae8cji4p5d9';
+
+/* ═══════════════════════════════════════════════════════════════════
+   STRIPE — LIENS DE PAIEMENT
+   ⚠️  MODE TEST ACTIF — à remplacer par les liens LIVE avant go-live
+   Procédure :
+     1. Compléter la vérification d'identité sur dashboard.stripe.com
+     2. Créer 4 Payment Links en mode LIVE avec ces noms de produits :
+        · Plan Starter Anual   → remplacer la valeur starter.annual
+        · Plan Starter Mensual → remplacer la valeur starter.monthly
+        · Plan Business Anual  → remplacer la valeur business.annual
+        · Plan Business Mensual→ remplacer la valeur business.monthly
+     3. Supprimer cette notice et uploader empezar.html sur GitHub
+   ═══════════════════════════════════════════════════════════════════ */
 var STRIPE = {
-  starter:  { annual:'https://buy.stripe.com/test_aFaeV7d7X80R5Px10i5wI01', monthly:'https://buy.stripe.com/test_14A7sF4Brepfb9R24m5wI00' },
-  business: { annual:'https://buy.stripe.com/test_14A8wJ6Jz3KB2DleR85wI03', monthly:'https://buy.stripe.com/test_aFa28l1pfdlbem38sK5wI02' }
+  starter:  {
+    annual:  'https://buy.stripe.com/test_aFaeV7d7X80R5Px10i5wI01',  /* ← REMPLACER PAR LIEN LIVE STARTER ANUAL   */
+    monthly: 'https://buy.stripe.com/test_14A7sF4Brepfb9R24m5wI00'   /* ← REMPLACER PAR LIEN LIVE STARTER MENSUAL */
+  },
+  business: {
+    annual:  'https://buy.stripe.com/test_14A8wJ6Jz3KB2DleR85wI03',  /* ← REMPLACER PAR LIEN LIVE BUSINESS ANUAL  */
+    monthly: 'https://buy.stripe.com/test_aFa28l1pfdlbem38sK5wI02'   /* ← REMPLACER PAR LIEN LIVE BUSINESS MENSUAL */
+  }
 };
 var state = { plan:'business', billing:'annual' };
 var TOTAL = 5;
@@ -719,6 +738,13 @@ function validateStep(n){
     sec.classList.toggle('has-error', !secOk);
     errSec.style.display = secOk ? 'none' : 'block';
     if(!secOk) ok = false;
+    // Valider le champ libre quand "Otro" est sélectionné
+    if(secOk && sec.value === 'Otro'){
+      var otroEl = document.getElementById('sector-otro');
+      var otroOk = otroEl && otroEl.value.trim().length > 0;
+      if(otroEl) otroEl.classList.toggle('has-error', !otroOk);
+      if(!otroOk) ok = false;
+    }
     return ok;
   }
   if(n === 3){
@@ -876,14 +902,34 @@ function collectData(){
 }
 
 /* ── SUBMIT ── */
+var _formSubmitted = false;
 function submitForm(){
+  // Protection double-submit
+  if(_formSubmitted) return;
+  _formSubmitted = true;
+  var btn = document.querySelector('#step-5 .btn-next');
+  if(btn){ btn.disabled = true; btn.textContent = 'Procesando...'; }
+
   showStep('confirm');
   var data = collectData();
+
   fetch(WEBHOOK,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(data)
-  }).catch(function(){});
+  }).then(function(res){
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+  }).catch(function(err){
+    // Webhook Make indisponible — on ne bloque pas le client, mais on sauvegarde les données
+    console.warn('[CCentre] Webhook Make non joignable:', err.message || err);
+    try {
+      var fallback = { ts: new Date().toISOString(), data: data };
+      localStorage.setItem('ccenew_onboarding_fallback', JSON.stringify(fallback));
+      console.info('[CCentre] Données sauvegardées en localStorage (clé: ccenew_onboarding_fallback)');
+    } catch(e) { /* localStorage non disponible (mode privé ou quota) */ }
+  });
+
+  // Redirection vers Stripe après 2,5s
   setTimeout(function(){
     window.location.href = STRIPE[state.plan][state.billing];
   }, 2500);
