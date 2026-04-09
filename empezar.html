@@ -229,8 +229,8 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
         <div class="field">
           <label class="field-label" for="whatsapp">WhatsApp <span class="req">*</span></label>
           <input class="field-input" type="tel" id="whatsapp" placeholder="+595 9XX XXX XXX" autocomplete="tel" pattern="\+[0-9\s]{7,20}" inputmode="tel">
-          <p class="field-hint">Debe comenzar con + seguido de su código de país. Ej: +595123123123</p>
-          <div class="field-error" id="err-whatsapp">Ingrese un número válido comenzando con + (ej: +595123123123)</div>
+          
+          <div class="field-error" id="err-whatsapp">Número inválido — debe comenzar con +<br>(ej: +595123123123)</div>
         </div>
         <div class="field">
           <label class="field-label" for="email">Email <span class="req">*</span></label>
@@ -626,7 +626,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 </main>
 
 <script>
-var WEBHOOK = 'https://hook.us2.make.com/PLACEHOLDER_ONBOARDING';
+var WEBHOOK = 'https://hook.us2.make.com/9xmejzhe9c0up5kj8sgljae8cji4p5d9';
 var STRIPE = {
   starter:  { annual:'https://buy.stripe.com/test_aFaeV7d7X80R5Px10i5wI01', monthly:'https://buy.stripe.com/test_14A7sF4Brepfb9R24m5wI00' },
   business: { annual:'https://buy.stripe.com/test_14A8wJ6Jz3KB2DleR85wI03', monthly:'https://buy.stripe.com/test_aFa28l1pfdlbem38sK5wI02' }
