@@ -2552,7 +2552,7 @@ footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.06);padd
           </div>
           <p class="ecom-note">2% por venta o $20/mes si facturación &lt; $1.000</p>
         </div>
-        <button class="p-cta" style="margin-top:20px">Elegir STARTER →</button>
+        <a class="p-cta" id="cta-starter" href="https://buy.stripe.com/test_aFaeV7d7X80R5Px10i5wI01" target="_blank" rel="noopener" style="margin-top:20px;display:block;text-decoration:none">Elegir STARTER →</a>
       </div>
 
       <!-- CRECIMIENTO (FEATURED) -->
@@ -2596,7 +2596,7 @@ footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.06);padd
           </div>
           <p class="ecom-note">2% por venta o $20/mes si facturación &lt; $1.000</p>
         </div>
-        <button class="p-cta" style="margin-top:20px">Elegir BUSINESS →</button>
+        <a class="p-cta" id="cta-business" href="https://buy.stripe.com/test_14A8wJ6Jz3KB2DleR85wI03" target="_blank" rel="noopener" style="margin-top:20px;display:block;text-decoration:none">Elegir BUSINESS →</a>
       </div>
       </div><!-- /p-card-wrap -->
 
@@ -3136,6 +3136,32 @@ document.addEventListener('DOMContentLoaded', function(){
       el.style.display=on?'inline':'none';
     });
   }
+  /* ── STRIPE PAYMENT LINKS ── */
+  var PLAN_LINKS = {
+    starter: {
+      annual:  '/empezar?plan=starter&billing=annual',
+      monthly: '/empezar?plan=starter&billing=monthly'
+    },
+    business: {
+      annual:  '/empezar?plan=business&billing=annual',
+      monthly: '/empezar?plan=business&billing=monthly'
+    }
+  };
+
+  function updateStripeLinks(isAnnual) {
+    var mode = isAnnual ? 'annual' : 'monthly';
+    var ctaStarter = document.getElementById('cta-starter');
+    var ctaBusiness = document.getElementById('cta-business');
+    if (ctaStarter)  ctaStarter.href  = PLAN_LINKS.starter[mode];
+    if (ctaBusiness) ctaBusiness.href = PLAN_LINKS.business[mode];
+  }
+
+  var _origSetAnnual = setAnnual;
+  setAnnual = function(on) {
+    _origSetAnnual(on);
+    updateStripeLinks(on);
+  };
+
   // Init avec annuel par défaut
   setAnnual(true);
   toggle.addEventListener('click',function(){
