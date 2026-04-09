@@ -228,9 +228,9 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
       <div class="row2">
         <div class="field">
           <label class="field-label" for="whatsapp">WhatsApp <span class="req">*</span></label>
-          <input class="field-input" type="tel" id="whatsapp" placeholder="+595 9XX XXX XXX" autocomplete="tel">
-          <p class="field-hint">Lo usaremos para coordinar su proyecto de forma rápida. No enviamos publicidad.</p>
-          <div class="field-error" id="err-whatsapp">Por favor ingrese su número de WhatsApp.</div>
+          <input class="field-input" type="tel" id="whatsapp" placeholder="+595 9XX XXX XXX" autocomplete="tel" pattern="\+[0-9\s]{7,20}" inputmode="tel">
+          <p class="field-hint">Debe comenzar con + seguido de su código de país. Ej: +595123123123</p>
+          <div class="field-error" id="err-whatsapp">Ingrese un número válido comenzando con + (ej: +595123123123)</div>
         </div>
         <div class="field">
           <label class="field-label" for="email">Email <span class="req">*</span></label>
@@ -281,7 +281,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
       <div class="field">
         <label class="field-label">¿Tiene sitio web actualmente? <span class="req">*</span></label>
         <div class="option-group" id="web-group">
-          <label class="option-item selected" onclick="selectOption('web-group',this,'si');showCond('cond-web-url',true)">
+          <label class="option-item" data-radio-group="web-group" data-value="si" data-showcond="cond-web-url" data-showcond-val="true">
             <input type="radio" name="web" value="si">
             <div class="option-dot"></div>
             <div class="option-text"><div class="option-main">Sí, tengo un sitio activo</div></div>
@@ -332,7 +332,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
         </div>
         <div class="cond" id="cond-redes-url">
           <div class="cond-label">Enlace a su perfil principal</div>
-          <input class="field-input" type="url" id="redes-url" placeholder="https://instagram.com/sunegocio">
+          <input class="field-input" type="url" id="redes-url" placeholder="https://redsocial.com/sunegocio">
           <p class="field-hint">Conocer su presencia actual nos ayuda a crear un sitio coherente con su imagen de marca.</p>
         </div>
       </div>
@@ -708,6 +708,7 @@ function validateStep(n){
       var err = document.getElementById('err-'+id);
       var valid = el.value.trim().length > 0;
       if(id === 'email') valid = valid && /^[^@]+@[^@]+\.[^@]+$/.test(el.value.trim());
+        if(id === 'whatsapp') valid = valid && /^\+[0-9][0-9\s]{6,19}$/.test(el.value.trim());
       el.classList.toggle('has-error', !valid);
       if(err) err.style.display = valid ? 'none' : 'block';
       if(!valid) ok = false;
