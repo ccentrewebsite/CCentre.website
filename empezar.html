@@ -144,6 +144,19 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 /* ── ERROR ── */
 .field-error{font-size:12px;color:#E53E3E;margin-top:4px;display:none}
 .field-input.has-error{border-color:#E53E3E}
+
+/* ── UPLOAD ZONES ── */
+.upload-zone{border:2px dashed #D1D5DB;border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#FAFAFA}
+.upload-zone:hover{border-color:#0047FF;background:#F0F4FF}
+.upload-label{font-size:14px;color:#374151;margin:10px 0 4px}
+.upload-link{color:#0047FF;font-weight:500}
+.upload-hint{font-size:12px;color:#9CA3AF}
+.upload-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.upload-thumb{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid #E5E7EB}
+.upload-thumb img{width:100%;height:100%;object-fit:cover}
+.upload-thumb .upload-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;line-height:1}
+.upload-file-item{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:8px 12px;font-size:12px;color:#374151}
+.upload-file-item .upload-remove{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
 </style>
 </head>
 <body>
@@ -152,7 +165,20 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 <div class="top-bar">
   <a href="/" class="nav-logo" aria-label="CCentre.website">
     <svg height="26" viewBox="0 0 2928.56 544.53" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:auto">
-  <defs><style>.nl0{fill:#0047FF}.nl1{fill:#0047FF}</style></defs>
+  <defs><style>.nl0{fill:#0047FF}.nl1{fill:#0047FF}
+/* ── UPLOAD ZONES ── */
+.upload-zone{border:2px dashed #D1D5DB;border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#FAFAFA}
+.upload-zone:hover{border-color:#0047FF;background:#F0F4FF}
+.upload-label{font-size:14px;color:#374151;margin:10px 0 4px}
+.upload-link{color:#0047FF;font-weight:500}
+.upload-hint{font-size:12px;color:#9CA3AF}
+.upload-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.upload-thumb{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid #E5E7EB}
+.upload-thumb img{width:100%;height:100%;object-fit:cover}
+.upload-thumb .upload-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;line-height:1}
+.upload-file-item{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:8px 12px;font-size:12px;color:#374151}
+.upload-file-item .upload-remove{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
+</style></defs>
   <path class="nl1" d="M419.93,380.21l42.86,43.7c-28.16,31.55-61.76,52.23-97.29,62.59-17.08,4.25-34.95,6.5-53.35,6.5-81.02,0-151.84-43.65-190.24-108.72-.01-.03-.03-.06-.04-.09-19.35-32.82-30.45-71.08-30.45-111.93,0-64.52,27.69-122.58,71.83-162.94.16-.15.32-.3.49-.45,39.2-35.62,91.27-57.34,148.41-57.34,29.34,0,57.35,5.73,82.97,16.12,26.03,11.28,50.1,27.93,70.5,49.66l-45.43,46.92c-43.6-42.29-109.69-58.73-164.84-35-72.11,31.03-104.73,103.69-91.38,178.12.09.51.04,1.06.08,1.57,24.29,86.93,110.86,137.3,199.17,108.79,21.43-6.92,38.81-22.76,56.71-37.5Z"/>
   <g>
     <path d="M458.6,272.11c0-73.6,51.52-126.88,126.18-126.88,69.05,0,105.85,44.86,114.26,81.67l-45.21,12.62c-4.91-20.68-26.99-49.07-69.05-49.07-45.21,0-78.16,34-78.16,81.67s32.95,81.67,78.16,81.67c42.06,0,64.14-28.39,69.05-49.07l45.56,12.62c-8.76,36.8-45.21,81.67-114.61,81.67-74.66,0-126.18-52.92-126.18-126.88Z"/>
@@ -488,6 +514,18 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
           </div>
         </div>
 
+
+        <!-- Upload fotos -->
+        <div class="cond show" id="upload-fotos-wrap" style="margin-top:12px">
+          <label class="field-label">Subir fotos o imágenes del negocio <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+          <div class="upload-zone" id="upload-fotos-zone" onclick="document.getElementById('upload-fotos-input').click()">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 20V12M16 12l-4 4M16 12l4 4" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="28" height="28" rx="6" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+            <p class="upload-label">Arrastrá tus archivos aquí o <span class="upload-link">seleccioná desde tu dispositivo</span></p>
+            <p class="upload-hint">PNG, JPG, JPEG — máx. 10 MB por archivo</p>
+          </div>
+          <input type="file" id="upload-fotos-input" accept=".png,.jpg,.jpeg" multiple style="display:none" onchange="handleUpload('fotos',this)">
+          <div class="upload-preview" id="upload-fotos-preview"></div>
+        </div>
         <div class="field">
           <label class="field-label">¿Cómo describiría el tono de su marca?</label>
           <div class="option-group" id="tono-group">
@@ -531,6 +569,18 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
         </div>
       </div>
 
+
+        <!-- Upload logo -->
+        <div class="cond show" id="upload-logo-wrap" style="margin-top:12px">
+          <label class="field-label">Subir su logo <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+          <div class="upload-zone" id="upload-logo-zone" onclick="document.getElementById('upload-logo-input').click()">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 20V12M16 12l-4 4M16 12l4 4" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="28" height="28" rx="6" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+            <p class="upload-label">Arrastrá su logo aquí o <span class="upload-link">seleccioná desde su dispositivo</span></p>
+            <p class="upload-hint">SVG, EPS, PNG, JPG, JPEG — máx. 10 MB</p>
+          </div>
+          <input type="file" id="upload-logo-input" accept=".svg,.eps,.png,.jpg,.jpeg" style="display:none" onchange="handleUpload('logo',this)">
+          <div class="upload-preview" id="upload-logo-preview"></div>
+        </div>
       <div class="field">
         <label class="field-label" for="colores">¿Tiene colores o paleta definida para su marca? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
         <input class="field-input" type="text" id="colores" placeholder="Ej: azul marino y dorado, o código #0047FF">
@@ -725,6 +775,20 @@ function goNext(from){
 function goBack(from){ showStep(from-1); }
 
 /* ── VALIDATION ── */
+function showRadioError(groupId, show){
+  var grp = document.getElementById(groupId);
+  if(!grp) return;
+  var err = document.getElementById('err-'+groupId);
+  if(!err){
+    err = document.createElement('div');
+    err.id = 'err-'+groupId;
+    err.className = 'field-error';
+    err.style.display = 'none';
+    err.textContent = 'Por favor seleccione una opción.';
+    grp.parentNode.insertBefore(err, grp.nextSibling);
+  }
+  err.style.display = show ? 'block' : 'none';
+}
 function validateStep(n){
   if(n === 1){
     var ok = true;
@@ -744,7 +808,6 @@ function validateStep(n){
     sec.classList.toggle('has-error', !secOk);
     errSec.style.display = secOk ? 'none' : 'block';
     if(!secOk) ok = false;
-    // Valider le champ libre quand "Otro" est sélectionné
     if(secOk && sec.value === 'Otro'){
       var otroEl = document.getElementById('sector-otro');
       var otroOk = otroEl && otroEl.value.trim().length > 0;
@@ -753,9 +816,57 @@ function validateStep(n){
     }
     return ok;
   }
+  if(n === 2){
+    // ¿Tiene sitio web? — obligatoire
+    var web = document.querySelector('input[name="web"]:checked');
+    if(!web){ showRadioError('web-group', true); return false; }
+    showRadioError('web-group', false);
+    return true;
+  }
   if(n === 3){
+    var ok = true;
+    // Objetivo obligatoire
     var obj = document.querySelector('input[name="objetivo"]:checked');
-    if(!obj){ alert('Por favor seleccione su objetivo principal.'); return false; }
+    if(!obj){ showRadioError('objetivo-group', true); ok = false; }
+    else { showRadioError('objetivo-group', false); }
+    // Secciones — au moins une case cochée
+    var secciones = document.querySelectorAll('#secciones-group input[type=checkbox]:checked');
+    if(secciones.length === 0){ showRadioError('secciones-group', true); ok = false; }
+    else { showRadioError('secciones-group', false); }
+    // Objetivo otro si "otro" sélectionné
+    if(obj && obj.value === 'otro'){
+      var otroOtro = document.getElementById('objetivo-otro');
+      var otroOtroOk = otroOtro && otroOtro.value.trim().length > 0;
+      if(otroOtro) otroOtro.classList.toggle('has-error', !otroOtroOk);
+      if(!otroOtroOk) ok = false;
+    }
+    return ok;
+  }
+  if(n === 4){
+    var ok = true;
+    var isBiz = state.plan === 'business';
+    if(isBiz){
+      // Contenido obligatoire pour Business
+      var cont = document.querySelector('input[name="contenido"]:checked');
+      if(!cont){ showRadioError('contenido-group', true); ok = false; }
+      else { showRadioError('contenido-group', false); }
+      // Tono obligatoire pour Business
+      var tono = document.querySelector('input[name="tono"]:checked');
+      if(!tono){ showRadioError('tono-group', true); ok = false; }
+      else { showRadioError('tono-group', false); }
+    }
+    // Logo obligatoire pour tous
+    var logo = document.querySelector('input[name="logo"]:checked');
+    if(!logo){ showRadioError('logo-group', true); ok = false; }
+    else { showRadioError('logo-group', false); }
+    return ok;
+  }
+  if(n === 5){
+    // Urgencia obligatoire
+    var urg = document.querySelector('input[name="urgencia"]:checked');
+    if(!urg){ showRadioError('urgencia-group', true); return false; }
+    showRadioError('urgencia-group', false);
+    return true;
   }
   return true;
 }
@@ -940,6 +1051,69 @@ function submitForm(){
     window.location.href = STRIPE[state.plan][state.billing];
   }, 2500);
 }
+
+/* ── UPLOAD HANDLER ── */
+var uploadedFiles = { fotos: [], logo: [] };
+function handleUpload(type, input){
+  var files = Array.from(input.files);
+  var preview = document.getElementById('upload-'+type+'-preview');
+  files.forEach(function(file){
+    if(file.size > 10 * 1024 * 1024){ alert('El archivo "'+file.name+'" supera los 10 MB.'); return; }
+    uploadedFiles[type].push(file);
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var wrap = document.createElement('div');
+      var isImage = file.type.startsWith('image/') && file.type !== 'image/svg+xml';
+      if(isImage){
+        wrap.className = 'upload-thumb';
+        wrap.innerHTML = '<img src="'+e.target.result+'" alt="'+file.name+'"><div class="upload-remove" onclick="removeUpload(''+type+'','+uploadedFiles[type].length+',this.parentNode)">✕</div>';
+      } else {
+        wrap.className = 'upload-file-item';
+        wrap.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="10" height="14" rx="2" stroke="#6B7280" stroke-width="1.2"/><path d="M5 5h6M5 8h6M5 11h4" stroke="#6B7280" stroke-width="1" stroke-linecap="round"/></svg>'+file.name+'<span class="upload-remove" onclick="removeUpload(''+type+'','+uploadedFiles[type].length+',this.parentNode)">✕</span>';
+      }
+      preview.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+function removeUpload(type, idx, el){ el.remove(); }
+
+/* Drag & drop */
+['fotos','logo'].forEach(function(type){
+  document.addEventListener('DOMContentLoaded', function(){
+    var zone = document.getElementById('upload-'+type+'-zone');
+    if(!zone) return;
+    zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.style.borderColor='#0047FF'; zone.style.background='#F0F4FF'; });
+    zone.addEventListener('dragleave', function(){ zone.style.borderColor=''; zone.style.background=''; });
+    zone.addEventListener('drop', function(e){
+      e.preventDefault(); zone.style.borderColor=''; zone.style.background='';
+      var input = document.getElementById('upload-'+type+'-input');
+      var dt = e.dataTransfer;
+      // Simuler l'input
+      var files = Array.from(dt.files);
+      var preview = document.getElementById('upload-'+type+'-preview');
+      files.forEach(function(file){
+        if(file.size > 10*1024*1024){ alert('El archivo "'+file.name+'" supera los 10 MB.'); return; }
+        uploadedFiles[type].push(file);
+        var reader = new FileReader();
+        reader.onload = function(ev){
+          var wrap = document.createElement('div');
+          var isImage = file.type.startsWith('image/') && file.type !== 'image/svg+xml';
+          if(isImage){
+            wrap.className = 'upload-thumb';
+            wrap.innerHTML = '<img src="'+ev.target.result+'" alt="'+file.name+'"><div class="upload-remove" onclick="this.parentNode.remove()">✕</div>';
+          } else {
+            wrap.className = 'upload-file-item';
+            wrap.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="10" height="14" rx="2" stroke="#6B7280" stroke-width="1.2"/></svg>'+file.name+'<span class="upload-remove" onclick="this.parentNode.remove()">✕</span>';
+          }
+          preview.appendChild(wrap);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  });
+});
 </script>
 </body>
 </html>
