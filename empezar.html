@@ -156,7 +156,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 .upload-thumb img{width:100%;height:100%;object-fit:cover}
 .upload-thumb .upload-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;line-height:1}
 .upload-file-item{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:8px 12px;font-size:12px;color:#374151}
-.upload-file-item .upload-remove{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
+.upload-file-item .remove-btn{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
 </style>
 </head>
 <body>
@@ -177,7 +177,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 .upload-thumb img{width:100%;height:100%;object-fit:cover}
 .upload-thumb .upload-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;line-height:1}
 .upload-file-item{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:8px 12px;font-size:12px;color:#374151}
-.upload-file-item .upload-remove{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
+.upload-file-item .remove-btn{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
 </style></defs>
   <path class="nl1" d="M419.93,380.21l42.86,43.7c-28.16,31.55-61.76,52.23-97.29,62.59-17.08,4.25-34.95,6.5-53.35,6.5-81.02,0-151.84-43.65-190.24-108.72-.01-.03-.03-.06-.04-.09-19.35-32.82-30.45-71.08-30.45-111.93,0-64.52,27.69-122.58,71.83-162.94.16-.15.32-.3.49-.45,39.2-35.62,91.27-57.34,148.41-57.34,29.34,0,57.35,5.73,82.97,16.12,26.03,11.28,50.1,27.93,70.5,49.66l-45.43,46.92c-43.6-42.29-109.69-58.73-164.84-35-72.11,31.03-104.73,103.69-91.38,178.12.09.51.04,1.06.08,1.57,24.29,86.93,110.86,137.3,199.17,108.79,21.43-6.92,38.81-22.76,56.71-37.5Z"/>
   <g>
@@ -515,16 +515,15 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
         </div>
 
 
-        <!-- Upload fotos -->
-        <div class="cond show" id="upload-fotos-wrap" style="margin-top:12px">
+        <div style="margin-bottom:20px">
           <label class="field-label">Subir fotos o imágenes del negocio <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
-          <div class="upload-zone" id="upload-fotos-zone" onclick="document.getElementById('upload-fotos-input').click()">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 20V12M16 12l-4 4M16 12l4 4" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="28" height="28" rx="6" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
-            <p class="upload-label">Arrastrá tus archivos aquí o <span class="upload-link">seleccioná desde tu dispositivo</span></p>
+          <div class="upload-zone" onclick="document.getElementById('inp-fotos').click()">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 18V10M14 10l-4 4M14 10l4 4" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="24" height="24" rx="5" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+            <p class="upload-label">Arrastre sus archivos o <span class="upload-link">seleccione desde su dispositivo</span></p>
             <p class="upload-hint">PNG, JPG, JPEG — máx. 10 MB por archivo</p>
           </div>
-          <input type="file" id="upload-fotos-input" accept=".png,.jpg,.jpeg" multiple style="display:none" onchange="handleUpload('fotos',this)">
-          <div class="upload-preview" id="upload-fotos-preview"></div>
+          <input type="file" id="inp-fotos" accept=".png,.jpg,.jpeg" multiple style="display:none">
+          <div class="upload-preview" id="prev-fotos"></div>
         </div>
         <div class="field">
           <label class="field-label">¿Cómo describiría el tono de su marca?</label>
@@ -570,17 +569,16 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
       </div>
 
 
-        <!-- Upload logo -->
-        <div class="cond show" id="upload-logo-wrap" style="margin-top:12px">
-          <label class="field-label">Subir su logo <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
-          <div class="upload-zone" id="upload-logo-zone" onclick="document.getElementById('upload-logo-input').click()">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 20V12M16 12l-4 4M16 12l4 4" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="28" height="28" rx="6" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
-            <p class="upload-label">Arrastrá su logo aquí o <span class="upload-link">seleccioná desde su dispositivo</span></p>
-            <p class="upload-hint">SVG, EPS, PNG, JPG, JPEG — máx. 10 MB</p>
-          </div>
-          <input type="file" id="upload-logo-input" accept=".svg,.eps,.png,.jpg,.jpeg" style="display:none" onchange="handleUpload('logo',this)">
-          <div class="upload-preview" id="upload-logo-preview"></div>
+      <div style="margin-bottom:20px">
+        <label class="field-label">Subir su logo <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+        <div class="upload-zone" onclick="document.getElementById('inp-logo').click()">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 18V10M14 10l-4 4M14 10l4 4" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="24" height="24" rx="5" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+          <p class="upload-label">Arrastre su logo o <span class="upload-link">seleccione desde su dispositivo</span></p>
+          <p class="upload-hint">SVG, EPS, PNG, JPG, JPEG — máx. 10 MB</p>
         </div>
+        <input type="file" id="inp-logo" accept=".svg,.eps,.png,.jpg,.jpeg" style="display:none">
+        <div class="upload-preview" id="prev-logo"></div>
+      </div>
       <div class="field">
         <label class="field-label" for="colores">¿Tiene colores o paleta definida para su marca? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
         <input class="field-input" type="text" id="colores" placeholder="Ej: azul marino y dorado, o código #0047FF">
@@ -775,20 +773,20 @@ function goNext(from){
 function goBack(from){ showStep(from-1); }
 
 /* ── VALIDATION ── */
-function showRadioError(groupId, show){
-  var grp = document.getElementById(groupId);
-  if(!grp) return;
-  var err = document.getElementById('err-'+groupId);
+function showGroupError(groupId, msg){
+  var err = document.getElementById('gerr-'+groupId);
   if(!err){
     err = document.createElement('div');
-    err.id = 'err-'+groupId;
-    err.className = 'field-error';
-    err.style.display = 'none';
-    err.textContent = 'Por favor seleccione una opción.';
-    grp.parentNode.insertBefore(err, grp.nextSibling);
+    err.id = 'gerr-'+groupId;
+    err.style.cssText = 'color:#DC2626;font-size:12px;margin-top:6px;display:none';
+    var grp = document.getElementById(groupId);
+    if(grp) grp.parentNode.insertBefore(err, grp.nextSibling);
   }
-  err.style.display = show ? 'block' : 'none';
+  err.textContent = msg || 'Por favor seleccione una opción.';
+  err.style.display = msg ? 'block' : 'none';
 }
+function hideGroupError(groupId){ showGroupError(groupId, ''); }
+
 function validateStep(n){
   if(n === 1){
     var ok = true;
@@ -817,55 +815,46 @@ function validateStep(n){
     return ok;
   }
   if(n === 2){
-    // ¿Tiene sitio web? — obligatoire
     var web = document.querySelector('input[name="web"]:checked');
-    if(!web){ showRadioError('web-group', true); return false; }
-    showRadioError('web-group', false);
+    if(!web){ showGroupError('web-group', 'Por favor seleccione una opción.'); return false; }
+    hideGroupError('web-group');
     return true;
   }
   if(n === 3){
     var ok = true;
-    // Objetivo obligatoire
     var obj = document.querySelector('input[name="objetivo"]:checked');
-    if(!obj){ showRadioError('objetivo-group', true); ok = false; }
-    else { showRadioError('objetivo-group', false); }
-    // Secciones — au moins une case cochée
-    var secciones = document.querySelectorAll('#secciones-group input[type=checkbox]:checked');
-    if(secciones.length === 0){ showRadioError('secciones-group', true); ok = false; }
-    else { showRadioError('secciones-group', false); }
-    // Objetivo otro si "otro" sélectionné
+    if(!obj){ showGroupError('objetivo-group', 'Por favor seleccione su objetivo.'); ok = false; }
+    else { hideGroupError('objetivo-group'); }
+    var secs = document.querySelectorAll('#secciones-group input[type=checkbox]:checked');
+    if(secs.length === 0){ showGroupError('secciones-group', 'Por favor seleccione al menos una sección.'); ok = false; }
+    else { hideGroupError('secciones-group'); }
     if(obj && obj.value === 'otro'){
-      var otroOtro = document.getElementById('objetivo-otro');
-      var otroOtroOk = otroOtro && otroOtro.value.trim().length > 0;
-      if(otroOtro) otroOtro.classList.toggle('has-error', !otroOtroOk);
-      if(!otroOtroOk) ok = false;
+      var ot = document.getElementById('objetivo-otro');
+      if(ot && ot.value.trim().length === 0){ ot.classList.add('has-error'); ok = false; }
+      else if(ot){ ot.classList.remove('has-error'); }
     }
     return ok;
   }
   if(n === 4){
     var ok = true;
-    var isBiz = state.plan === 'business';
+    var isBiz = state && state.plan === 'business';
     if(isBiz){
-      // Contenido obligatoire pour Business
       var cont = document.querySelector('input[name="contenido"]:checked');
-      if(!cont){ showRadioError('contenido-group', true); ok = false; }
-      else { showRadioError('contenido-group', false); }
-      // Tono obligatoire pour Business
+      if(!cont){ showGroupError('contenido-group', 'Por favor seleccione una opción.'); ok = false; }
+      else { hideGroupError('contenido-group'); }
       var tono = document.querySelector('input[name="tono"]:checked');
-      if(!tono){ showRadioError('tono-group', true); ok = false; }
-      else { showRadioError('tono-group', false); }
+      if(!tono){ showGroupError('tono-group', 'Por favor seleccione el tono de su marca.'); ok = false; }
+      else { hideGroupError('tono-group'); }
     }
-    // Logo obligatoire pour tous
     var logo = document.querySelector('input[name="logo"]:checked');
-    if(!logo){ showRadioError('logo-group', true); ok = false; }
-    else { showRadioError('logo-group', false); }
+    if(!logo){ showGroupError('logo-group', 'Por favor indique si tiene logo.'); ok = false; }
+    else { hideGroupError('logo-group'); }
     return ok;
   }
   if(n === 5){
-    // Urgencia obligatoire
     var urg = document.querySelector('input[name="urgencia"]:checked');
-    if(!urg){ showRadioError('urgencia-group', true); return false; }
-    showRadioError('urgencia-group', false);
+    if(!urg){ showGroupError('urgencia-group', 'Por favor seleccione cuándo desea lanzar su sitio.'); return false; }
+    hideGroupError('urgencia-group');
     return true;
   }
   return true;
@@ -1052,68 +1041,81 @@ function submitForm(){
   }, 2500);
 }
 
-/* ── UPLOAD HANDLER ── */
-var uploadedFiles = { fotos: [], logo: [] };
-function handleUpload(type, input){
-  var files = Array.from(input.files);
-  var preview = document.getElementById('upload-'+type+'-preview');
-  files.forEach(function(file){
-    if(file.size > 10 * 1024 * 1024){ alert('El archivo "'+file.name+'" supera los 10 MB.'); return; }
-    uploadedFiles[type].push(file);
-    var reader = new FileReader();
-    reader.onload = function(e){
-      var wrap = document.createElement('div');
-      var isImage = file.type.startsWith('image/') && file.type !== 'image/svg+xml';
-      if(isImage){
-        wrap.className = 'upload-thumb';
-        wrap.innerHTML = '<img src="'+e.target.result+'" alt="'+file.name+'"><div class="upload-remove" onclick="removeUpload(''+type+'','+uploadedFiles[type].length+',this.parentNode)">✕</div>';
-      } else {
-        wrap.className = 'upload-file-item';
-        wrap.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="10" height="14" rx="2" stroke="#6B7280" stroke-width="1.2"/><path d="M5 5h6M5 8h6M5 11h4" stroke="#6B7280" stroke-width="1" stroke-linecap="round"/></svg>'+file.name+'<span class="upload-remove" onclick="removeUpload(''+type+'','+uploadedFiles[type].length+',this.parentNode)">✕</span>';
-      }
-      preview.appendChild(wrap);
-    };
-    reader.readAsDataURL(file);
+/* ── UPLOAD ── */
+var uploadFiles = {fotos:[], logo:[]};
+function setupUpload(type){
+  var input = document.getElementById('inp-'+type);
+  var preview = document.getElementById('prev-'+type);
+  if(!input || !preview) return;
+  input.addEventListener('change', function(){
+    Array.from(this.files).forEach(function(file){
+      if(file.size > 10*1024*1024){ alert('Archivo demasiado grande (máx 10 MB): '+file.name); return; }
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        var div = document.createElement('div');
+        var isImg = file.type.startsWith('image/') && !file.name.endsWith('.svg') && !file.name.endsWith('.eps');
+        if(isImg){
+          div.className = 'upload-thumb';
+          var img = document.createElement('img');
+          img.src = ev.target.result;
+          img.alt = file.name;
+          var btn = document.createElement('div');
+          btn.className = 'upload-remove';
+          btn.textContent = '✕';
+          btn.onclick = function(){ div.remove(); };
+          div.appendChild(img);
+          div.appendChild(btn);
+        } else {
+          div.className = 'upload-file-item';
+          div.textContent = file.name;
+          var btn = document.createElement('span');
+          btn.className = 'remove-btn';
+          btn.textContent = '✕';
+          btn.onclick = function(){ div.remove(); };
+          div.appendChild(btn);
+        }
+        preview.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    });
+    input.value = '';
   });
-  input.value = '';
-}
-function removeUpload(type, idx, el){ el.remove(); }
-
-/* Drag & drop */
-['fotos','logo'].forEach(function(type){
-  document.addEventListener('DOMContentLoaded', function(){
-    var zone = document.getElementById('upload-'+type+'-zone');
-    if(!zone) return;
-    zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.style.borderColor='#0047FF'; zone.style.background='#F0F4FF'; });
-    zone.addEventListener('dragleave', function(){ zone.style.borderColor=''; zone.style.background=''; });
+  // Drag & drop
+  var zone = input.previousElementSibling;
+  if(zone && zone.classList.contains('upload-zone')){
+    zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.style.borderColor='#0047FF'; });
+    zone.addEventListener('dragleave', function(){ zone.style.borderColor=''; });
     zone.addEventListener('drop', function(e){
-      e.preventDefault(); zone.style.borderColor=''; zone.style.background='';
-      var input = document.getElementById('upload-'+type+'-input');
-      var dt = e.dataTransfer;
-      // Simuler l'input
-      var files = Array.from(dt.files);
-      var preview = document.getElementById('upload-'+type+'-preview');
-      files.forEach(function(file){
-        if(file.size > 10*1024*1024){ alert('El archivo "'+file.name+'" supera los 10 MB.'); return; }
-        uploadedFiles[type].push(file);
+      e.preventDefault(); zone.style.borderColor='';
+      var fakeFiles = Array.from(e.dataTransfer.files);
+      fakeFiles.forEach(function(file){
+        if(file.size > 10*1024*1024){ alert('Archivo demasiado grande: '+file.name); return; }
         var reader = new FileReader();
         reader.onload = function(ev){
-          var wrap = document.createElement('div');
-          var isImage = file.type.startsWith('image/') && file.type !== 'image/svg+xml';
-          if(isImage){
-            wrap.className = 'upload-thumb';
-            wrap.innerHTML = '<img src="'+ev.target.result+'" alt="'+file.name+'"><div class="upload-remove" onclick="this.parentNode.remove()">✕</div>';
+          var div = document.createElement('div');
+          var isImg = file.type.startsWith('image/') && !file.name.endsWith('.svg') && !file.name.endsWith('.eps');
+          if(isImg){
+            div.className = 'upload-thumb';
+            var img = document.createElement('img'); img.src = ev.target.result; img.alt = file.name;
+            var btn = document.createElement('div'); btn.className = 'upload-remove'; btn.textContent = '✕'; btn.onclick = function(){ div.remove(); };
+            div.appendChild(img); div.appendChild(btn);
           } else {
-            wrap.className = 'upload-file-item';
-            wrap.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="10" height="14" rx="2" stroke="#6B7280" stroke-width="1.2"/></svg>'+file.name+'<span class="upload-remove" onclick="this.parentNode.remove()">✕</span>';
+            div.className = 'upload-file-item'; div.textContent = file.name;
+            var btn = document.createElement('span'); btn.className = 'remove-btn'; btn.textContent = '✕'; btn.onclick = function(){ div.remove(); };
+            div.appendChild(btn);
           }
-          preview.appendChild(wrap);
+          preview.appendChild(div);
         };
         reader.readAsDataURL(file);
       });
     });
-  });
+  }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  setupUpload('fotos');
+  setupUpload('logo');
 });
+
 </script>
 </body>
 </html>
