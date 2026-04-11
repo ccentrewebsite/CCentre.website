@@ -556,3 +556,66 @@ function closeLightbox() {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLightbox();
 });
+
+/* ══════════════════════════════════════════════
+   ANIMATIONS CARDS SERVICES
+══════════════════════════════════════════════ */
+(function() {
+  function initCardAnimations() {
+    const cards = document.querySelectorAll('.svc-card');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const card = entry.target;
+          card.classList.add('is-visible');
+          // Lancer le compteur de likes si présent
+          card.querySelectorAll('.anim-likes').forEach(el => {
+            animateLikes(el);
+          });
+          observer.unobserve(card);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    cards.forEach(card => observer.observe(card));
+
+    // Re-déclencher au hover pour rejouer l'animation
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.classList.remove('is-visible');
+        // Reset likes
+        card.querySelectorAll('.anim-likes').forEach(el => {
+          el.textContent = '❤️ 0';
+        });
+        void card.offsetWidth; // force reflow
+        card.classList.add('is-visible');
+        card.querySelectorAll('.anim-likes').forEach(el => {
+          animateLikes(el);
+        });
+      });
+    });
+  }
+
+  function animateLikes(el) {
+    const target = parseInt(el.dataset.target || 0);
+    const duration = 1200;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = '❤️ ' + current;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCardAnimations);
+  } else {
+    initCardAnimations();
+  }
+})();
