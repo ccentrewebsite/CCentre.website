@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empezar su proyecto — CCentre.website</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#0047FF;--blue-deep:#001AFF;--blue-light:#EEF3FF;--blue-border:#E0E8FF;
+  --text-main:#0A0A0A;--text-muted:#6B7280;--white:#FFFFFF;--bg-alt:#F7F9FF;
+  --green:#059669;--green-light:#ECFDF5;
+  --radius-card:16px;--radius-btn:50px;--radius-field:10px;
+  --ff-serif:'Lora',Georgia,serif;--ff-sans:'Inter',system-ui,sans-serif;
+  --tf:.2s ease;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-sans);color:var(--text-main);background:var(--bg-alt);min-height:100vh;overflow-x:hidden}
+
+/* ── NAV ── */
+.top-bar{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;background:var(--white);border-bottom:1px solid var(--blue-border)}
+.nav-logo svg{height:26px;width:auto}
+.back-link{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:6px;text-decoration:none;transition:color var(--tf)}
+.back-link:hover{color:var(--text-main)}
+.back-link svg{width:14px;height:14px}
+
+/* ── LAYOUT ── */
+.page-wrap{max-width:680px;margin:0 auto;padding:40px 20px 80px}
+
+/* ── PLAN BADGE ── */
+.plan-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:var(--radius-btn);font-size:13px;font-weight:600;margin-bottom:32px}
+.plan-badge.starter{background:var(--blue-light);color:var(--blue)}
+.plan-badge.business{background:var(--green-light);color:var(--green)}
+.plan-badge .billing-pill{font-weight:400;opacity:.75}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin-bottom:40px}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)}
+.progress-count{font-size:12px;color:var(--text-muted)}
+.progress-bar-bg{height:3px;background:var(--blue-border);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--blue);border-radius:3px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+
+/* ── STEP ── */
+.step{display:none;animation:fadeUp .35s ease both}
+.step.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step-title{font-family:var(--ff-serif);font-size:clamp(24px,3vw,32px);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:8px}
+.step-sub{font-size:15px;color:var(--text-muted);line-height:1.6;margin-bottom:32px}
+
+/* ── CARD ── */
+.form-card{background:var(--white);border:1px solid var(--blue-border);border-radius:var(--radius-card);padding:28px;box-shadow:var(--shadow-sm)}
+
+/* ── FIELDS ── */
+.field{margin-bottom:20px}
+.field:last-child{margin-bottom:0}
+.field-label{display:block;font-size:13px;font-weight:600;color:var(--text-main);margin-bottom:6px}
+.field-hint{font-size:12px;color:var(--text-muted);margin-top:5px;line-height:1.4}
+.field-input{width:100%;font-family:var(--ff-sans);font-size:14px;color:var(--text-main);background:var(--white);border:1.5px solid #E5E7EB;border-radius:var(--radius-field);padding:11px 14px;transition:border-color var(--tf),box-shadow var(--tf);outline:none}
+.field-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,71,255,.08)}
+.field-input::placeholder{color:#C4C9D4}
+textarea.field-input{min-height:90px;resize:vertical}
+select.field-input{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}}
+
+/* ── RADIO / CHECK ── */
+.option-group{display:flex;flex-direction:column;gap:8px}
+.option-item{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:1.5px solid #E5E7EB;border-radius:var(--radius-field);cursor:pointer;transition:border-color var(--tf),background var(--tf);position:relative}
+.option-item:hover{border-color:#C4C9D4;background:#FAFAFA}
+.option-item.selected{border-color:var(--blue);background:var(--blue-light)}
+.option-item.selected-green{border-color:var(--green);background:var(--green-light)}
+.option-item input[type=radio],.option-item input[type=checkbox]{position:absolute;opacity:0;pointer-events:none}
+.option-dot{width:18px;height:18px;border-radius:50%;border:2px solid #D1D5DB;flex-shrink:0;margin-top:1px;transition:all var(--tf);display:flex;align-items:center;justify-content:center}
+.option-item.selected .option-dot{border-color:var(--blue);background:var(--blue)}
+.option-item.selected .option-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff}
+.option-check{width:18px;height:18px;border-radius:5px;border:2px solid #D1D5DB;flex-shrink:0;margin-top:1px;transition:all var(--tf);display:flex;align-items:center;justify-content:center}
+.option-item.selected .option-check{border-color:var(--blue);background:var(--blue)}
+.option-item.selected .option-check::after{content:'';width:10px;height:7px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 7' fill='none'%3E%3Cpolyline points='1,3.5 3.5,6 9,1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:contain}
+.option-text{flex:1}
+.option-main{font-size:14px;font-weight:500;color:var(--text-main);line-height:1.4}
+.option-desc{font-size:12px;color:var(--text-muted);margin-top:2px;line-height:1.4}
+
+/* ── PLAN CARDS ── */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px}
+@media(max-width:480px){.plan-grid{grid-template-columns:1fr}}
+.plan-card{border:1.5px solid #E5E7EB;border-radius:var(--radius-card);padding:18px;cursor:pointer;transition:all var(--tf);position:relative;background:var(--white)}
+.plan-card:hover{border-color:#C4C9D4}
+.plan-card.sel-starter{border-color:var(--blue);background:var(--blue-light)}
+.plan-card.sel-business{border-color:var(--green);background:var(--green-light)}
+.plan-popular{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.plan-name{font-family:var(--ff-serif);font-size:20px;font-weight:700;margin-bottom:4px}
+.plan-price{font-size:13px;color:var(--text-muted);margin-bottom:10px}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:5px}
+.plan-feats li{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.plan-feats li::before{content:'';width:14px;height:14px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Ccircle cx='7' cy='7' r='6.5' stroke='%230047FF' stroke-width='1'/%3E%3Cpolyline points='4,7 6,9 10,5' stroke='%230047FF' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:contain;flex-shrink:0}
+.plan-card.sel-business .plan-feats li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Ccircle cx='7' cy='7' r='6.5' stroke='%23059669' stroke-width='1'/%3E%3Cpolyline points='4,7 6,9 10,5' stroke='%23059669' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+
+/* ── CONDITIONAL ── */
+.cond{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #F3F4F6}
+.cond.show{display:block}
+.cond-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+
+/* ── DIVIDER ── */
+.field-divider{border:none;border-top:1px solid #F3F4F6;margin:24px 0}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;gap:12px;margin-top:28px;align-items:center}
+.btn-next{flex:1;background:var(--blue);color:#fff;font-family:var(--ff-sans);font-size:15px;font-weight:600;padding:14px 28px;border-radius:var(--radius-btn);border:none;cursor:pointer;transition:all var(--tf);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-next:hover{background:var(--blue-deep);transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,71,255,.3)}
+.btn-next.green{background:var(--green)}
+.btn-next.green:hover{background:#047857;box-shadow:0 6px 24px rgba(5,150,105,.3)}
+.btn-back{background:transparent;color:var(--text-muted);font-family:var(--ff-sans);font-size:14px;font-weight:500;padding:14px 18px;border-radius:var(--radius-btn);border:1.5px solid #E5E7EB;cursor:pointer;transition:all var(--tf)}
+.btn-back:hover{border-color:#C4C9D4;color:var(--text-main)}
+.btn-next svg,.btn-back svg{width:16px;height:16px;flex-shrink:0}
+
+/* ── SECURITY NOTE ── */
+.security-note{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);margin-top:16px;justify-content:center}
+.security-note svg{width:13px;height:13px;flex-shrink:0}
+
+/* ── CONFIRMATION ── */
+.confirm-wrap{text-align:center;padding:48px 24px}
+.confirm-icon{width:64px;height:64px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.confirm-icon svg{width:28px;height:28px}
+.confirm-title{font-family:var(--ff-serif);font-size:28px;font-weight:700;margin-bottom:12px}
+.confirm-sub{font-size:15px;color:var(--text-muted);line-height:1.6;max-width:420px;margin:0 auto 28px}
+.confirm-loader{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text-muted)}
+.loader-dots{display:flex;gap:4px}
+.loader-dots span{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:bounce .8s ease infinite}
+.loader-dots span:nth-child(2){animation-delay:.15s}
+.loader-dots span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:scale(0.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+/* ── REQUIRED MARKER ── */
+.req{color:#E53E3E;margin-left:2px}
+.required-note{font-size:12px;color:var(--text-muted);margin-bottom:24px}
+
+/* ── ERROR ── */
+.field-error{font-size:12px;color:#E53E3E;margin-top:4px;display:none}
+.field-input.has-error{border-color:#E53E3E}
+
+/* ── UPLOAD ZONES ── */
+.upload-zone{border:2px dashed #D1D5DB;border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#FAFAFA}
+.upload-zone:hover{border-color:#0047FF;background:#F0F4FF}
+.upload-label{font-size:14px;color:#374151;margin:10px 0 4px}
+.upload-link{color:#0047FF;font-weight:500}
+.upload-hint{font-size:12px;color:#9CA3AF}
+.upload-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.upload-thumb{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid #E5E7EB}
+.upload-thumb img{width:100%;height:100%;object-fit:cover}
+.upload-thumb .upload-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;line-height:1}
+.upload-file-item{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:8px 12px;font-size:12px;color:#374151}
+.upload-file-item .remove-btn{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="top-bar">
+  <a href="/" class="nav-logo" aria-label="CCentre.website">
+    <svg height="26" viewBox="0 0 2928.56 544.53" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:auto">
+  <defs><style>.nl0{fill:#0047FF}.nl1{fill:#0047FF}
+/* ── UPLOAD ZONES ── */
+.upload-zone{border:2px dashed #D1D5DB;border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#FAFAFA}
+.upload-zone:hover{border-color:#0047FF;background:#F0F4FF}
+.upload-label{font-size:14px;color:#374151;margin:10px 0 4px}
+.upload-link{color:#0047FF;font-weight:500}
+.upload-hint{font-size:12px;color:#9CA3AF}
+.upload-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.upload-thumb{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid #E5E7EB}
+.upload-thumb img{width:100%;height:100%;object-fit:cover}
+.upload-thumb .upload-remove{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;line-height:1}
+.upload-file-item{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:8px 12px;font-size:12px;color:#374151}
+.upload-file-item .remove-btn{cursor:pointer;color:#9CA3AF;font-size:14px;margin-left:auto}
+</style></defs>
+  <path class="nl1" d="M419.93,380.21l42.86,43.7c-28.16,31.55-61.76,52.23-97.29,62.59-17.08,4.25-34.95,6.5-53.35,6.5-81.02,0-151.84-43.65-190.24-108.72-.01-.03-.03-.06-.04-.09-19.35-32.82-30.45-71.08-30.45-111.93,0-64.52,27.69-122.58,71.83-162.94.16-.15.32-.3.49-.45,39.2-35.62,91.27-57.34,148.41-57.34,29.34,0,57.35,5.73,82.97,16.12,26.03,11.28,50.1,27.93,70.5,49.66l-45.43,46.92c-43.6-42.29-109.69-58.73-164.84-35-72.11,31.03-104.73,103.69-91.38,178.12.09.51.04,1.06.08,1.57,24.29,86.93,110.86,137.3,199.17,108.79,21.43-6.92,38.81-22.76,56.71-37.5Z"/>
+  <g>
+    <path d="M458.6,272.11c0-73.6,51.52-126.88,126.18-126.88,69.05,0,105.85,44.86,114.26,81.67l-45.21,12.62c-4.91-20.68-26.99-49.07-69.05-49.07-45.21,0-78.16,34-78.16,81.67s32.95,81.67,78.16,81.67c42.06,0,64.14-28.39,69.05-49.07l45.56,12.62c-8.76,36.8-45.21,81.67-114.61,81.67-74.66,0-126.18-52.92-126.18-126.88Z"/>
+    <path d="M710.25,307.86c0-53.63,40.66-91.13,91.83-91.13s87.27,34,87.27,85.87c0,7.36-.7,14.72-1.05,18.23h-131.08c3.5,23.48,22.08,38.91,46.62,38.91,21.03,0,35.05-12.27,40.31-25.24l42.06,11.57c-9.11,29.44-40.31,52.92-82.37,52.92-52.22,0-93.58-37.85-93.58-91.13ZM844.84,287.19c-3.5-19.63-21.03-31.19-42.41-31.19s-37.5,10.51-43.46,31.19h85.87Z"/>
+    <path d="M912.14,220.94h46.62v15.07c10.87-12.62,27.34-19.28,48.72-19.28,38.91,0,65.89,26.99,65.89,65.54v112.51h-46.62v-99.19c0-22.78-12.62-36.8-33.65-36.8s-34.35,14.37-34.35,36.8v99.19h-46.62v-173.85Z"/>
+    <path d="M1117.88,338.71v-78.51h-32.25v-39.26h14.02c13.67,0,18.23-8.76,18.23-32.95v-14.02h46.62v46.97h42.41v39.26h-42.41v75.36c0,14.37,8.06,22.78,22.08,22.78,7.71,0,15.77-1.4,22.43-3.51l6.31,36.45c-10.51,3.5-22.78,5.61-34.7,5.61-37.85,0-62.74-23.13-62.74-58.18Z"/>
+    <path d="M1235.29,220.94h46.62v18.93c10.87-15.07,26.99-23.13,48.02-23.13,5.26,0,10.16.35,15.42,1.05v41.36c-4.91-.7-9.81-1.4-15.07-1.4-29.79,0-48.37,17.52-48.37,44.16v92.88h-46.62v-173.85Z"/>
+    <path d="M1348.85,307.86c0-53.63,40.66-91.13,91.83-91.13s87.27,34,87.27,85.87c0,7.36-.7,14.72-1.05,18.23h-131.08c3.5,23.48,22.08,38.91,46.62,38.91,21.03,0,35.05-12.27,40.31-25.24l42.06,11.57c-9.11,29.44-40.31,52.92-82.37,52.92-52.22,0-93.58-37.85-93.58-91.13ZM1483.44,287.19c-3.5-19.63-21.03-31.19-42.41-31.19s-37.5,10.51-43.46,31.19h85.87Z"/>
+    <path d="M1537.07,368.5c0-15.42,12.62-28.74,28.74-28.74s28.74,13.32,28.74,28.74-12.97,28.39-28.74,28.39-28.74-12.62-28.74-28.39Z"/>
+    <path class="nl0" d="M1584.03,220.94h48.72l36.45,124.78,38.55-124.78h43.81l38.55,124.78,36.1-124.78h48.72l-55.38,173.85h-52.22l-37.85-118.12-37.85,118.12h-52.22l-55.38-173.85Z"/>
+    <path class="nl0" d="M1878.8,307.86c0-53.63,40.66-91.13,91.83-91.13s87.27,34,87.27,85.87c0,7.36-.7,14.72-1.05,18.23h-131.08c3.5,23.48,22.08,38.91,46.62,38.91,21.03,0,35.05-12.27,40.31-25.24l42.06,11.57c-9.11,29.44-40.31,52.92-82.37,52.92-52.22,0-93.58-37.85-93.58-91.13ZM2013.39,287.19c-3.5-19.63-21.03-31.19-42.41-31.19s-37.5,10.51-43.46,31.19h85.87Z"/>
+    <path class="nl0" d="M2127.29,378.66v16.12h-46.62v-245.35h46.62v87.97c14.02-13.32,32.95-20.68,55.38-20.68,51.17,0,87.97,37.85,87.97,91.13s-36.8,91.13-87.97,91.13c-22.08,0-41.01-7.01-55.38-20.33ZM2175.66,356.93c27.69,0,48.37-21.03,48.37-49.07s-20.68-49.07-48.37-49.07-48.37,20.68-48.37,49.07,20.68,49.07,48.37,49.07Z"/>
+    <path class="nl0" d="M2285.37,348.52l39.61-10.16c2.8,15.42,17.17,25.59,36.1,25.59,14.37,0,23.83-6.31,23.83-15.77s-7.01-14.72-25.59-19.98l-21.38-6.31c-31.19-9.46-46.62-25.94-46.62-51.17,0-32.6,25.24-53.98,64.84-53.98,37.15,0,64.84,19.28,71.85,49.77l-39.61,7.36c-4.56-13.32-17.17-22.08-31.89-22.43-12.97,0-21.38,7.01-21.38,16.47,0,8.76,6.66,14.02,25.24,18.58l21.38,5.96c30.84,8.76,46.97,24.88,46.97,51.52,0,32.6-27.34,55.03-67.29,55.03s-72.55-22.08-76.06-50.47Z"/>
+    <path class="nl0" d="M2475.33,141.03c16.82,0,30.14,14.02,30.14,30.14s-13.32,29.79-30.14,29.79-30.14-13.67-30.14-29.79,13.32-30.14,30.14-30.14ZM2452.19,220.94h46.62v173.85h-46.62v-173.85Z"/>
+    <path class="nl0" d="M2550.68,338.71v-78.51h-32.25v-39.26h14.02c13.67,0,18.23-8.76,18.23-32.95v-14.02h46.62v46.97h42.41v39.26h-42.41v75.36c0,14.37,8.06,22.78,22.08,22.78,7.71,0,15.77-1.4,22.43-3.51l6.31,36.45c-10.51,3.5-22.78,5.61-34.7,5.61-37.85,0-62.74-23.13-62.74-58.18Z"/>
+    <path class="nl0" d="M2654.42,307.86c0-53.63,40.66-91.13,91.83-91.13s87.27,34,87.27,85.87c0,7.36-.7,14.72-1.05,18.23h-131.08c3.5,23.48,22.08,38.91,46.62,38.91,21.03,0,35.05-12.27,40.31-25.24l42.06,11.57c-9.11,29.44-40.31,52.92-82.37,52.92-52.22,0-93.58-37.85-93.58-91.13ZM2789.01,287.19c-3.5-19.63-21.03-31.19-42.41-31.19s-37.5,10.51-43.46,31.19h85.87Z"/>
+  </g>
+  <g>
+    <path class="nl1" d="M299.39,366.49h-.51c-.07-.42-.3-.64-.73-1.07l-46.64-46.6c1.69-1.39,2.99-2.92,4.52-4.4,11.89-11.47,12.03-30.31.36-42.01l-12.1-12.13c6.12-6.68,11.62-11.27,21.17-7.78,9.48,3.73,17.19,13.66,22.79,22.37l65.85-65.93c4.06-4.06,10.56-3.61,14.35.09s4.45,10.27.44,14.32l-27.36,27.66c5.46-1.99,10.71-.79,13.64,3.61,2.9,4.35,2.15,10.07-1.83,13.68-.34.07-.58,1.13-.19.96,5.18-2.2,10.8-.25,13.37,4.26,2.76,4.84,1.29,10.02-3.01,14.08,5.35-1.86,10.27-.86,13.31,3.2,2.94,3.93,2.86,9.65-.78,13.32l-34.03,34.28c-4.03,4.05-8.28,6.9-13.44,9.29-16.92,7.84-15.34,3.59-29.21,18.8Z"/>
+    <polygon class="nl1" points="273.22 218.99 258.57 204.38 265.88 197.03 280.53 211.68 273.22 218.99"/>
+    <polygon class="nl1" points="301.24 211.05 290.87 211.13 290.89 190.42 301.23 190.44 301.24 211.05"/>
+    <polygon class="nl1" points="318.94 218.97 311.6 211.67 326.22 197.07 333.52 204.35 318.94 218.97"/>
+  </g>
+</svg>
+  </a>
+  <a href="/" class="back-link">
+    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Volver al inicio
+  </a>
+</div>
+
+<!-- MAIN -->
+<main class="page-wrap">
+
+  <!-- PLAN BADGE -->
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px"><div id="plan-badge" class="plan-badge" style="margin-bottom:0">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span id="badge-text">Plan Starter — Anual</span>
+  </div><button onclick="showPlanChanger()" style="font-size:12px;color:var(--text-muted);background:none;border:none;cursor:pointer;text-decoration:underline;font-family:var(--ff-sans)">Cambiar plan</button></div>
+
+  <!-- PLAN CHANGER MODAL -->
+  <div id="plan-changer" style="display:none;background:var(--white);border:1px solid var(--blue-border);border-radius:var(--radius-card);padding:20px;margin-bottom:24px;box-shadow:var(--shadow-md)">
+    <p style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text-main)">Cambiar plan</p>
+    <div class="plan-grid" id="plan-grid-changer">
+      <div class="plan-card" id="cc-starter-annual" onclick="selectPlanCard('starter','annual');closePlanChanger()"><div class="plan-name" style="font-size:15px">Starter Anual</div><div class="plan-price">$79/mes</div></div>
+      <div class="plan-card" id="cc-starter-monthly" onclick="selectPlanCard('starter','monthly');closePlanChanger()"><div class="plan-name" style="font-size:15px">Starter Mensual</div><div class="plan-price">$99/mes</div></div>
+      <div class="plan-card" id="cc-business-annual" onclick="selectPlanCard('business','annual');closePlanChanger()"><div class="plan-name" style="font-size:15px">Business Anual</div><div class="plan-price">$139/mes</div></div>
+      <div class="plan-card" id="cc-business-monthly" onclick="selectPlanCard('business','monthly');closePlanChanger()"><div class="plan-name" style="font-size:15px">Business Mensual</div><div class="plan-price">$199/mes</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label" id="progress-label">Paso 1 de 6</span>
+      <span class="progress-count" id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- ══ STEP 2 : CONTACTO ══ -->
+  <div class="step active" id="step-1">
+    <h1 class="step-title">Sus datos de contacto</h1>
+    <p class="step-sub">Esta información nos permite coordinar su proyecto de forma personalizada. Sus datos no se comparten con terceros.</p>
+    <div class="form-card">
+      <p class="required-note">Los campos marcados con <span class="req">*</span> son obligatorios.</p>
+      <div class="row2">
+        <div class="field">
+          <label class="field-label" for="nombre">Nombre completo <span class="req">*</span></label>
+          <input class="field-input" type="text" id="nombre" placeholder="Ej: Juan Pérez" autocomplete="name">
+          <div class="field-error" id="err-nombre">Por favor ingrese su nombre.</div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="empresa">Nombre del negocio <span class="req">*</span></label>
+          <input class="field-input" type="text" id="empresa" placeholder="Ej: Clínica Santa Ana" autocomplete="organization">
+          <div class="field-error" id="err-empresa">Por favor ingrese el nombre de su negocio.</div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label class="field-label" for="whatsapp">WhatsApp <span class="req">*</span></label>
+          <input class="field-input" type="tel" id="whatsapp" placeholder="+595 9XX XXX XXX" autocomplete="tel" pattern="\+[0-9\s]{7,20}" inputmode="tel">
+          
+          <div class="field-error" id="err-whatsapp">Número inválido — debe comenzar con +<br>(ej: +595123123123)</div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="email">Email <span class="req">*</span></label>
+          <input class="field-input" type="email" id="email" placeholder="juan@empresa.com" autocomplete="email">
+          <div class="field-error" id="err-email">Por favor ingrese un email válido.</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label" for="sector">Rubro / Sector <span class="req">*</span></label>
+        <select class="field-input" id="sector" onchange="handleSector()">
+          <option value="">Seleccionar su sector...</option>
+          <option value="Clínica / Salud">Clínica / Salud</option>
+          <option value="Restaurante / Gastronomía">Restaurante / Gastronomía</option>
+          <option value="Inmobiliaria">Inmobiliaria</option>
+          <option value="Mecánica / Automotriz">Mecánica / Automotriz</option>
+          <option value="Salón de belleza / Estética">Salón de belleza / Estética</option>
+          <option value="Educación / Academia">Educación / Academia</option>
+          <option value="Comercio / Retail">Comercio / Retail</option>
+          <option value="Servicios profesionales">Servicios profesionales</option>
+          <option value="Construcción / Arquitectura">Construcción / Arquitectura</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <div class="field-error" id="err-sector">Por favor seleccione su sector.</div>
+      </div>
+      <div class="cond" id="cond-sector">
+        <label class="field-label" for="sector-otro">Especifique su rubro <span class="req">*</span></label>
+        <input class="field-input" type="text" id="sector-otro" placeholder="Ej: Veterinaria, Odontología...">
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="window.location.href='/'">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M12 8H4M7 5L4 8l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Volver al inicio
+        </button>
+        <button class="btn-next" onclick="goNext(1)">
+          Continuar
+          <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3 : SITUACIÓN ACTUAL ══ -->
+  <div class="step" id="step-2">
+    <h1 class="step-title">Situación digital actual</h1>
+    <p class="step-sub">Entender su punto de partida nos permite diseñar un sitio coherente con lo que ya tiene, y mejorar lo que falta.</p>
+    <div class="form-card">
+
+      <div class="field">
+        <label class="field-label">¿Tiene sitio web actualmente? <span class="req">*</span></label>
+        <div class="option-group" id="web-group">
+          <label class="option-item" data-radio-group="web-group" data-value="si" data-showcond="cond-web-url" data-showcond-val="true">
+            <input type="radio" name="web" value="si">
+            <div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Sí, tengo un sitio activo</div></div>
+          </label>
+          <label class="option-item" data-radio-group="web-group" data-value="no" data-showcond="cond-web-url" data-showcond-val="false">
+            <input type="radio" name="web" value="no">
+            <div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">No, nunca tuve sitio web</div></div>
+          </label>
+          <label class="option-item" data-radio-group="web-group" data-value="inactivo" data-showcond="cond-web-url" data-showcond-val="false">
+            <input type="radio" name="web" value="inactivo">
+            <div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Tuve uno pero ya no está activo</div></div>
+          </label>
+        </div>
+        <div class="cond" id="cond-web-url">
+          <div class="cond-label">URL de su sitio actual</div>
+          <input class="field-input" type="url" id="web-url" placeholder="https://www.sunegocio.com">
+          <p class="field-hint">Lo analizamos para entender qué funciona hoy y qué mejorar.</p>
+        </div>
+      </div>
+
+      <hr class="field-divider">
+
+      <div class="field">
+        <label class="field-label">¿Tiene redes sociales activas? <span style="font-weight:400;color:var(--text-muted)">(seleccione todas las que apliquen)</span></label>
+        <div class="option-group" id="redes-group">
+          <label class="option-item" data-group="redes-group" data-cb="true">
+            <input type="checkbox" value="instagram">
+            <div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Instagram</div></div>
+          </label>
+          <label class="option-item" data-group="redes-group" data-cb="true">
+            <input type="checkbox" value="facebook">
+            <div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Facebook</div></div>
+          </label>
+          <label class="option-item" data-group="redes-group" data-cb="true">
+            <input type="checkbox" value="tiktok">
+            <div class="option-check"></div>
+            <div class="option-text"><div class="option-main">TikTok</div></div>
+          </label>
+          <label class="option-item" data-group="redes-group" data-ninguna="true" data-cb="true">
+            <input type="checkbox" value="ninguna">
+            <div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Ninguna por ahora</div></div>
+          </label>
+        </div>
+        <div class="cond" id="cond-redes-url">
+          <div class="cond-label">Enlace a su perfil principal</div>
+          <input class="field-input" type="url" id="redes-url" placeholder="https://redsocial.com/sunegocio">
+          <p class="field-hint">Conocer su presencia actual nos ayuda a crear un sitio coherente con su imagen de marca.</p>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(2)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M12 8H4M7 5L4 8l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Volver
+        </button>
+        <button class="btn-next" onclick="goNext(2)">
+          Continuar
+          <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 4 : EL PROYECTO ══ -->
+  <div class="step" id="step-3">
+    <h1 class="step-title">Su proyecto</h1>
+    <p class="step-sub">Cuanto más nos cuente ahora, más preparados llegamos a nuestra primera conversación.</p>
+    <div class="form-card">
+
+      <div class="field">
+        <label class="field-label">¿Qué objetivo principal busca con su sitio web? <span class="req">*</span></label>
+        <div class="option-group" id="objetivo-group">
+          <label class="option-item" data-radio-group="objetivo-group" data-value="clientes" data-showcond="cond-objetivo-otro" data-showcond-val="false">
+            <input type="radio" name="objetivo" value="clientes">
+            <div class="option-dot"></div>
+            <div class="option-text">
+              <div class="option-main">Conseguir más clientes y ventas</div>
+              <div class="option-desc">Quiero que el sitio genere contactos y consultas</div>
+            </div>
+          </label>
+          <label class="option-item" data-radio-group="objetivo-group" data-value="credibilidad" data-showcond="cond-objetivo-otro" data-showcond-val="false">
+            <input type="radio" name="objetivo" value="credibilidad">
+            <div class="option-dot"></div>
+            <div class="option-text">
+              <div class="option-main">Ganar credibilidad y presencia profesional</div>
+              <div class="option-desc">Quiero que mis clientes me encuentren y confíen en mi negocio</div>
+            </div>
+          </label>
+          <label class="option-item" data-radio-group="objetivo-group" data-value="informar" data-showcond="cond-objetivo-otro" data-showcond-val="false">
+            <input type="radio" name="objetivo" value="informar">
+            <div class="option-dot"></div>
+            <div class="option-text">
+              <div class="option-main">Informar sobre servicios, precios y horarios</div>
+              <div class="option-desc">Quiero que mis clientes actuales tengan todo a mano</div>
+            </div>
+          </label>
+          <label class="option-item" data-radio-group="objetivo-group" data-value="otro" data-showcond="cond-objetivo-otro" data-showcond-val="true">
+            <input type="radio" name="objetivo" value="otro">
+            <div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Otro objetivo</div></div>
+          </label>
+        </div>
+        <div class="cond" id="cond-objetivo-otro">
+          <input class="field-input" type="text" id="objetivo-otro" placeholder="Describa su objetivo principal...">
+        </div>
+      </div>
+
+      <hr class="field-divider">
+
+      <div class="field">
+        <label class="field-label">¿Qué secciones necesita su sitio? <span style="font-weight:400;color:var(--text-muted)">(puede seleccionar varias)</span></label>
+        <div class="option-group" id="secciones-group">
+          <label class="option-item" data-group="secciones-group" data-cb="true">
+            <input type="checkbox" value="servicios_precios"><div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Servicios / productos con precios</div></div>
+          </label>
+          <label class="option-item" data-group="secciones-group" data-cb="true">
+            <input type="checkbox" value="galeria"><div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Galería de fotos o trabajos realizados</div></div>
+          </label>
+          <label class="option-item" data-group="secciones-group" data-cb="true">
+            <input type="checkbox" value="reservas"><div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Formulario de citas o reservas</div></div>
+          </label>
+          <label class="option-item" data-group="secciones-group" data-cb="true">
+            <input type="checkbox" value="mapa"><div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Ubicación y mapa interactivo</div></div>
+          </label>
+          <label class="option-item" data-group="secciones-group" data-cb="true">
+            <input type="checkbox" value="testimonios"><div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Testimonios de clientes</div></div>
+          </label>
+          <label class="option-item" data-group="secciones-group" data-cb="true">
+            <input type="checkbox" value="whatsapp"><div class="option-check"></div>
+            <div class="option-text"><div class="option-main">Botón de contacto por WhatsApp</div></div>
+          </label>
+        </div>
+      </div>
+
+      <hr class="field-divider">
+
+      <div class="field">
+        <label class="field-label" for="referencia">¿Tiene algún sitio de referencia que le guste? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+        <input class="field-input" type="url" id="referencia" placeholder="https://ejemplo.com">
+        <p class="field-hint">No lo copiamos, pero nos ayuda a entender su estilo visual y lo que le parece atractivo.</p>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(3)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M12 8H4M7 5L4 8l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Volver
+        </button>
+        <button class="btn-next" onclick="goNext(3)">
+          Continuar
+          <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 5 : IDENTIDAD VISUAL + BUSINESS ══ -->
+  <div class="step" id="step-4">
+    <h1 class="step-title" id="step4-title">Identidad visual</h1>
+    <p class="step-sub" id="step4-sub">Cuéntenos sobre la imagen de su marca para que el sitio sea 100% coherente con su negocio.</p>
+    <div class="form-card">
+
+      <!-- BLOQUE BUSINESS ONLY -->
+      <div id="block-business" style="display:none">
+        <div class="field">
+          <label class="field-label">¿Tiene contenido visual propio (fotos o videos del negocio)?</label>
+          <div class="option-group" id="contenido-group">
+            <label class="option-item" data-radio-group="contenido-group" data-value="si">
+              <input type="radio" name="contenido" value="si"><div class="option-dot"></div>
+              <div class="option-text">
+                <div class="option-main">Sí, tengo fotos y/o videos</div>
+                <div class="option-desc">Puedo compartirlos cuando empecemos</div>
+              </div>
+            </label>
+            <label class="option-item" data-radio-group="contenido-group" data-value="parcial">
+              <input type="radio" name="contenido" value="parcial"><div class="option-dot"></div>
+              <div class="option-text">
+                <div class="option-main">Tengo algo pero es limitado</div>
+                <div class="option-desc">Necesitaré ayuda para complementar</div>
+              </div>
+            </label>
+            <label class="option-item" data-radio-group="contenido-group" data-value="no">
+              <input type="radio" name="contenido" value="no"><div class="option-dot"></div>
+              <div class="option-text">
+                <div class="option-main">No tengo, necesito que me orienten</div>
+                <div class="option-desc">Saber esto de antemano nos permite planificar el diseño desde el primer día.</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+
+        <div style="margin-bottom:20px">
+          <label class="field-label">Subir fotos o imágenes del negocio <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+          <div class="upload-zone" onclick="document.getElementById('inp-fotos').click()">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 18V10M14 10l-4 4M14 10l4 4" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="24" height="24" rx="5" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+            <p class="upload-label">Arrastre sus archivos o <span class="upload-link">seleccione desde su dispositivo</span></p>
+            <p class="upload-hint">PNG, JPG, JPEG — máx. 10 MB por archivo</p>
+          </div>
+          <input type="file" id="inp-fotos" accept=".png,.jpg,.jpeg" multiple style="display:none">
+          <div class="upload-preview" id="prev-fotos"></div>
+        </div>
+        <div class="field">
+          <label class="field-label">¿Cómo describiría el tono de su marca?</label>
+          <div class="option-group" id="tono-group">
+            <label class="option-item" data-radio-group="tono-group" data-value="profesional">
+              <input type="radio" name="tono" value="profesional"><div class="option-dot"></div>
+              <div class="option-text"><div class="option-main">Profesional y formal</div><div class="option-desc">Serio, institucional, confiable</div></div>
+            </label>
+            <label class="option-item" data-radio-group="tono-group" data-value="cercano">
+              <input type="radio" name="tono" value="cercano"><div class="option-dot"></div>
+              <div class="option-text"><div class="option-main">Cercano y amigable</div><div class="option-desc">Accesible, cálido, humano</div></div>
+            </label>
+            <label class="option-item" data-radio-group="tono-group" data-value="moderno">
+              <input type="radio" name="tono" value="moderno"><div class="option-dot"></div>
+              <div class="option-text"><div class="option-main">Moderno y dinámico</div><div class="option-desc">Joven, energético, innovador</div></div>
+            </label>
+            <label class="option-item" data-radio-group="tono-group" data-value="premium">
+              <input type="radio" name="tono" value="premium"><div class="option-dot"></div>
+              <div class="option-text"><div class="option-main">Premium / exclusivo</div><div class="option-desc">Sofisticado, aspiracional, de alto valor</div></div>
+            </label>
+          </div>
+        </div>
+        <hr class="field-divider">
+      </div>
+
+      <!-- BLOQUE COMÚN -->
+      <div class="field">
+        <label class="field-label">¿Tiene logo?</label>
+        <div class="option-group" id="logo-group">
+          <label class="option-item" data-radio-group="logo-group" data-value="si">
+            <input type="radio" name="logo" value="si"><div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Sí, en buena calidad</div><div class="option-desc">PNG o vector (AI, SVG, EPS)</div></div>
+          </label>
+          <label class="option-item" data-radio-group="logo-group" data-value="baja">
+            <input type="radio" name="logo" value="baja"><div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Tengo logo pero en baja resolución</div><div class="option-desc">Solo tengo JPG pixelado o una foto</div></div>
+          </label>
+          <label class="option-item" data-radio-group="logo-group" data-value="no">
+            <input type="radio" name="logo" value="no"><div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">No tengo logo aún</div><div class="option-desc">Lo crearemos juntos</div></div>
+          </label>
+        </div>
+      </div>
+
+
+      <div style="margin-bottom:20px">
+        <label class="field-label">Subir su logo <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+        <div class="upload-zone" onclick="document.getElementById('inp-logo').click()">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 18V10M14 10l-4 4M14 10l4 4" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="24" height="24" rx="5" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+          <p class="upload-label">Arrastre su logo o <span class="upload-link">seleccione desde su dispositivo</span></p>
+          <p class="upload-hint">SVG, EPS, PNG, JPG, JPEG — máx. 10 MB</p>
+        </div>
+        <input type="file" id="inp-logo" accept=".svg,.eps,.png,.jpg,.jpeg" style="display:none">
+        <div class="upload-preview" id="prev-logo"></div>
+      </div>
+      <div class="field">
+        <label class="field-label" for="colores">¿Tiene colores o paleta definida para su marca? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+        <input class="field-input" type="text" id="colores" placeholder="Ej: azul marino y dorado, o código #0047FF">
+        <p class="field-hint">Si no tiene colores definidos, se los propondremos según su sector y estilo.</p>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(4)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M12 8H4M7 5L4 8l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Volver
+        </button>
+        <button class="btn-next" onclick="goNext(4)">
+          Continuar
+          <svg viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 6 : ÚLTIMO PASO ══ -->
+  <div class="step" id="step-5">
+    <h1 class="step-title">Último paso</h1>
+    <p class="step-sub">Ya casi terminamos. Estos últimos detalles nos ayudan a priorizar y preparar mejor su proyecto.</p>
+    <div class="form-card">
+
+      <div class="field">
+        <label class="field-label">¿Cuándo le gustaría lanzar su sitio?</label>
+        <div class="option-group" id="urgencia-group">
+          <label class="option-item" data-radio-group="urgencia-group" data-value="urgente">
+            <input type="radio" name="urgencia" value="urgente"><div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Lo antes posible</div><div class="option-desc">Tengo urgencia, necesito estar online pronto</div></div>
+          </label>
+          <label class="option-item" data-radio-group="urgencia-group" data-value="mes">
+            <input type="radio" name="urgencia" value="mes"><div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">En el próximo mes</div><div class="option-desc">Tengo algo de margen pero quiero avanzar</div></div>
+          </label>
+          <label class="option-item" data-radio-group="urgencia-group" data-value="sin-prisa">
+            <input type="radio" name="urgencia" value="sin-prisa"><div class="option-dot"></div>
+            <div class="option-text"><div class="option-main">Sin prisa, cuando esté bien hecho</div><div class="option-desc">Prefiero calidad sobre velocidad</div></div>
+          </label>
+        </div>
+      </div>
+
+      <hr class="field-divider">
+
+      <div class="field">
+        <label class="field-label" for="fuente">¿Cómo nos conoció? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+        <select class="field-input" id="fuente">
+          <option value="">Seleccionar...</option>
+          <option>Búsqueda en Google</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>Recomendación de alguien</option>
+          <option>WhatsApp</option>
+          <option>LinkedIn</option>
+          <option>Otro</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="notas">¿Algo más que quiera contarnos? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></label>
+        <textarea class="field-input" id="notas" placeholder="Cualquier detalle extra sobre su negocio, dudas, o lo que quiera que sepamos antes de hablar..."></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goBack(5)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M12 8H4M7 5L4 8l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Volver
+        </button>
+        <button class="btn-next green" onclick="submitForm()">
+          Enviar y continuar al pago →
+        </button>
+      </div>
+
+      <div class="security-note">
+        <svg viewBox="0 0 13 13" fill="none"><path d="M6.5 1L2 3v4c0 2.5 2 4.5 4.5 5C9 11.5 11 9.5 11 7V3L6.5 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Sus datos están protegidos · Solo los usamos para su proyecto
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONFIRMATION ══ -->
+  <div class="step" id="step-confirm">
+    <div class="confirm-wrap">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 28 28" fill="none"><polyline points="5,14 11,20 23,8" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h1 class="confirm-title">¡Recibimos su información!</h1>
+      <p class="confirm-sub">Perfecto. Ahora le redirigimos al pago seguro para activar su plan. En menos de 24 horas nos ponemos en contacto.</p>
+      <div class="confirm-loader">
+        <span>Redirigiendo al pago</span>
+        <div class="loader-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+var WEBHOOK = 'https://hook.us2.make.com/9xmejzhe9c0up5kj8sgljae8cji4p5d9';
+
+/* ═══════════════════════════════════════════════════════════════════
+   STRIPE — LIENS DE PAIEMENT
+   ⚠️  MODE TEST ACTIF — à remplacer par les liens LIVE avant go-live
+   Procédure :
+     1. Compléter la vérification d'identité sur dashboard.stripe.com
+     2. Créer 4 Payment Links en mode LIVE avec ces noms de produits :
+        · Plan Starter Anual   → remplacer la valeur starter.annual
+        · Plan Starter Mensual → remplacer la valeur starter.monthly
+        · Plan Business Anual  → remplacer la valeur business.annual
+        · Plan Business Mensual→ remplacer la valeur business.monthly
+     3. Supprimer cette notice et uploader empezar.html sur GitHub
+   ═══════════════════════════════════════════════════════════════════ */
+var STRIPE = {
+  starter:  {
+    annual:  'https://buy.stripe.com/dRm4gBgyOczFbZy5wA0ZW01',  /* ← REMPLACER PAR LIEN LIVE STARTER ANUAL   */
+    monthly: 'https://buy.stripe.com/3cI9AV3M2gPV9RqbUY0ZW00'   /* ← REMPLACER PAR LIEN LIVE STARTER MENSUAL */
+  },
+  business: {
+    annual:  'https://buy.stripe.com/3cI3cx0zQ8jpgfO6AE0ZW03',  /* ← REMPLACER PAR LIEN LIVE BUSINESS ANUAL  */
+    monthly: 'https://buy.stripe.com/fZucN74Q61V13t25wA0ZW02'   /* ← REMPLACER PAR LIEN LIVE BUSINESS MENSUAL */
+  }
+};
+var state = { plan:'business', billing:'annual' };
+var TOTAL = 5;
+var currentStep = 1;
+
+/* ── INIT depuis URL ── */
+(function(){
+  var p = new URLSearchParams(window.location.search);
+  var plan = p.get('plan') || 'business';
+  var billing = p.get('billing') || 'annual';
+  if(plan !== 'starter') plan = 'business';
+  if(billing !== 'monthly') billing = 'annual';
+  state.plan = plan;
+  state.billing = billing;
+  updateBadge();
+})();
+
+function updateBadge(){
+  var badge = document.getElementById('plan-badge');
+  var txt = document.getElementById('badge-text');
+  var planLabel = state.plan === 'business' ? 'Business' : 'Starter';
+  var billLabel = state.billing === 'annual' ? 'Anual' : 'Mensual';
+  txt.textContent = 'Plan ' + planLabel + ' — ' + billLabel;
+  badge.className = 'plan-badge ' + state.plan;
+  // highlight dans le changer
+  document.querySelectorAll('#plan-grid-changer .plan-card').forEach(function(c){ c.className='plan-card'; });
+  var id = 'cc-'+state.plan+'-'+state.billing;
+  var el = document.getElementById(id);
+  if(el) el.classList.add(state.plan==='business'?'sel-business':'sel-starter');
+}
+
+function selectPlanCard(plan, billing){
+  state.plan = plan;
+  state.billing = billing;
+  updateBadge();
+}
+
+function showPlanChanger(){
+  var el = document.getElementById('plan-changer');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+function closePlanChanger(){
+  document.getElementById('plan-changer').style.display = 'none';
+}
+
+/* ── PROGRESS ── */
+function setProgress(step){
+  var pct = Math.round(((step-1)/TOTAL)*100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-label').textContent = 'Paso '+step+' de '+TOTAL;
+  document.getElementById('progress-pct').textContent = pct+'%';
+}
+
+/* ── NAVIGATION ── */
+function showStep(n){
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById('step-'+(n==='confirm'?'confirm':n));
+  if(el) el.classList.add('active');
+  currentStep = n;
+  if(typeof n === 'number') setProgress(n);
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n === 4) updateStep4();
+}
+function goNext(from){
+  if(!validateStep(from)) return;
+  showStep(from+1);
+}
+function goBack(from){ showStep(from-1); }
+
+/* ── VALIDATION ── */
+function showGroupError(groupId, msg){
+  var err = document.getElementById('gerr-'+groupId);
+  if(!err){
+    err = document.createElement('div');
+    err.id = 'gerr-'+groupId;
+    err.style.cssText = 'color:#DC2626;font-size:12px;margin-top:6px;display:none';
+    var grp = document.getElementById(groupId);
+    if(grp) grp.parentNode.insertBefore(err, grp.nextSibling);
+  }
+  err.textContent = msg || 'Por favor seleccione una opción.';
+  err.style.display = msg ? 'block' : 'none';
+}
+function hideGroupError(groupId){ showGroupError(groupId, ''); }
+
+function validateStep(n){
+  if(n === 1){
+    var ok = true;
+    ['nombre','empresa','whatsapp','email'].forEach(function(id){
+      var el = document.getElementById(id);
+      var err = document.getElementById('err-'+id);
+      var valid = el.value.trim().length > 0;
+      if(id === 'email') valid = valid && /^[^@]+@[^@]+\.[^@]+$/.test(el.value.trim());
+        if(id === 'whatsapp') valid = valid && /^\+[0-9][0-9\s]{6,19}$/.test(el.value.trim());
+      el.classList.toggle('has-error', !valid);
+      if(err) err.style.display = valid ? 'none' : 'block';
+      if(!valid) ok = false;
+    });
+    var sec = document.getElementById('sector');
+    var errSec = document.getElementById('err-sector');
+    var secOk = sec.value !== '';
+    sec.classList.toggle('has-error', !secOk);
+    errSec.style.display = secOk ? 'none' : 'block';
+    if(!secOk) ok = false;
+    if(secOk && sec.value === 'Otro'){
+      var otroEl = document.getElementById('sector-otro');
+      var otroOk = otroEl && otroEl.value.trim().length > 0;
+      if(otroEl) otroEl.classList.toggle('has-error', !otroOk);
+      if(!otroOk) ok = false;
+    }
+    return ok;
+  }
+  if(n === 2){
+    var web = document.querySelector('input[name="web"]:checked');
+    if(!web){ showGroupError('web-group', 'Por favor seleccione una opción.'); return false; }
+    hideGroupError('web-group');
+    return true;
+  }
+  if(n === 3){
+    var ok = true;
+    var obj = document.querySelector('input[name="objetivo"]:checked');
+    if(!obj){ showGroupError('objetivo-group', 'Por favor seleccione su objetivo.'); ok = false; }
+    else { hideGroupError('objetivo-group'); }
+    var secs = document.querySelectorAll('#secciones-group input[type=checkbox]:checked');
+    if(secs.length === 0){ showGroupError('secciones-group', 'Por favor seleccione al menos una sección.'); ok = false; }
+    else { hideGroupError('secciones-group'); }
+    if(obj && obj.value === 'otro'){
+      var ot = document.getElementById('objetivo-otro');
+      if(ot && ot.value.trim().length === 0){ ot.classList.add('has-error'); ok = false; }
+      else if(ot){ ot.classList.remove('has-error'); }
+    }
+    return ok;
+  }
+  if(n === 4){
+    var ok = true;
+    var isBiz = state && state.plan === 'business';
+    if(isBiz){
+      var cont = document.querySelector('input[name="contenido"]:checked');
+      if(!cont){ showGroupError('contenido-group', 'Por favor seleccione una opción.'); ok = false; }
+      else { hideGroupError('contenido-group'); }
+      var tono = document.querySelector('input[name="tono"]:checked');
+      if(!tono){ showGroupError('tono-group', 'Por favor seleccione el tono de su marca.'); ok = false; }
+      else { hideGroupError('tono-group'); }
+    }
+    var logo = document.querySelector('input[name="logo"]:checked');
+    if(!logo){ showGroupError('logo-group', 'Por favor indique si tiene logo.'); ok = false; }
+    else { hideGroupError('logo-group'); }
+    return ok;
+  }
+  if(n === 5){
+    var urg = document.querySelector('input[name="urgencia"]:checked');
+    if(!urg){ showGroupError('urgencia-group', 'Por favor seleccione cuándo desea lanzar su sitio.'); return false; }
+    hideGroupError('urgencia-group');
+    return true;
+  }
+  return true;
+}
+
+/* ── CONDITIONALS ── */
+function showCond(id, show){
+  var el = document.getElementById(id);
+  if(el) el.classList.toggle('show', show);
+}
+function handleSector(){
+  showCond('cond-sector', document.getElementById('sector').value === 'Otro');
+}
+function updateRedesUrl(){
+  var checks = document.querySelectorAll('#redes-group input[type=checkbox]');
+  var any = false;
+  checks.forEach(function(c){ if(c.checked && c.value !== 'ninguna') any = true; });
+  showCond('cond-redes-url', any);
+}
+function updateStep4(){
+  var isBiz = state.plan === 'business';
+  document.getElementById('block-business').style.display = isBiz ? 'block' : 'none';
+  document.getElementById('step4-title').textContent = isBiz ? 'Contenido e identidad visual' : 'Identidad visual';
+  document.getElementById('step4-sub').textContent = isBiz
+    ? 'Para el plan Business gestionamos sus redes y blog. Necesitamos conocer su tono y sus recursos visuales.'
+    : 'Cuéntenos sobre la imagen de su marca para que el sitio sea 100% coherente con su negocio.';
+}
+
+/* ── EVENT DELEGATION — radios y checkboxes sin conflicto ── */
+document.addEventListener('DOMContentLoaded', function(){
+
+  document.body.addEventListener('click', function(e){
+    var label = e.target.closest('.option-item');
+    if(!label) return;
+
+    /* RADIO */
+    var radioGroup = label.dataset.radioGroup;
+    if(radioGroup){
+      e.preventDefault();
+      // Deselect all in group
+      document.querySelectorAll('[data-radio-group="'+radioGroup+'"]').forEach(function(l){
+        l.classList.remove('selected');
+        var r = l.querySelector('input[type=radio]');
+        if(r) r.checked = false;
+      });
+      label.classList.add('selected');
+      var radio = label.querySelector('input[type=radio]');
+      if(radio) radio.checked = true;
+      // showCond
+      if(label.dataset.showcond){
+        showCond(label.dataset.showcond, label.dataset.showcondVal === 'true');
+        // hide all other conds in same radio group
+        document.querySelectorAll('[data-radio-group="'+radioGroup+'"]').forEach(function(l2){
+          if(l2 !== label && l2.dataset.showcond){
+            showCond(l2.dataset.showcond, false);
+          }
+        });
+      }
+      // Special: web-group
+      if(radioGroup === 'web-group'){
+        var val = radio ? radio.value : '';
+        showCond('cond-web-url', val === 'si');
+      }
+      return;
+    }
+
+    /* CHECKBOX */
+    if(label.dataset.cb){
+      e.preventDefault();
+      var cb = label.querySelector('input[type=checkbox]');
+      if(!cb) return;
+      var group = label.dataset.group;
+      var isNinguna = label.dataset.ninguna === 'true';
+
+      if(isNinguna){
+        // Deselect all others
+        document.querySelectorAll('[data-group="'+group+'"]').forEach(function(l2){
+          l2.classList.remove('selected');
+          var c = l2.querySelector('input[type=checkbox]');
+          if(c) c.checked = false;
+        });
+        label.classList.add('selected');
+        cb.checked = true;
+      } else {
+        // Uncheck "ninguna" if present
+        var ningEl = document.querySelector('[data-group="'+group+'"][data-ninguna="true"]');
+        if(ningEl){
+          ningEl.classList.remove('selected');
+          var ningCb = ningEl.querySelector('input[type=checkbox]');
+          if(ningCb) ningCb.checked = false;
+        }
+        cb.checked = !cb.checked;
+        label.classList.toggle('selected', cb.checked);
+      }
+      if(group === 'redes-group') updateRedesUrl();
+    }
+  });
+
+  /* sector change */
+  document.getElementById('sector').addEventListener('change', handleSector);
+
+  showStep(1);
+  updateBadge();
+});
+
+/* ── PLAN CARDS dans le changer ── */
+document.querySelectorAll && (function(){
+  // highlight initial après DOM ready - géré dans updateBadge()
+})();
+
+/* ── COLLECT ── */
+function collectData(){
+  var webVal = '';
+  var webChecked = document.querySelector('input[name="web"]:checked');
+  if(webChecked) webVal = webChecked.value;
+
+  var redesCbs = document.querySelectorAll('#redes-group input[type=checkbox]:checked');
+  var redes = Array.from(redesCbs).map(function(c){ return c.value; }).join(', ');
+
+  var seccionesCbs = document.querySelectorAll('#secciones-group input[type=checkbox]:checked');
+  var secciones = Array.from(seccionesCbs).map(function(c){ return c.value; }).join(', ');
+
+  var sectorVal = document.getElementById('sector').value;
+  if(sectorVal === 'Otro') sectorVal = document.getElementById('sector-otro').value;
+
+  return {
+    fecha: new Date().toLocaleString('es-PY',{timeZone:'America/Asuncion',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})+' (PY)',
+    plan: state.plan.charAt(0).toUpperCase()+state.plan.slice(1),
+    facturacion: state.billing === 'annual' ? 'Anual' : 'Mensual',
+    nombre: document.getElementById('nombre').value.trim(),
+    empresa: document.getElementById('empresa').value.trim(),
+    whatsapp: document.getElementById('whatsapp').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    sector: sectorVal,
+    sitio_web: webVal,
+    url_web: document.getElementById('web-url').value.trim(),
+    redes: redes,
+    url_redes: document.getElementById('redes-url').value.trim(),
+    objetivo: (document.querySelector('input[name="objetivo"]:checked')||{}).value||'',
+    objetivo_detalle: document.getElementById('objetivo-otro').value.trim(),
+    secciones: secciones,
+    referencia: document.getElementById('referencia').value.trim(),
+    contenido: (document.querySelector('input[name="contenido"]:checked')||{}).value||'',
+    tono: (document.querySelector('input[name="tono"]:checked')||{}).value||'',
+    logo: (document.querySelector('input[name="logo"]:checked')||{}).value||'',
+    colores: document.getElementById('colores').value.trim(),
+    urgencia: (document.querySelector('input[name="urgencia"]:checked')||{}).value||'',
+    fuente: document.getElementById('fuente').value,
+    notas: document.getElementById('notas').value.trim()
+  };
+}
+
+/* ── SUBMIT ── */
+var _formSubmitted = false;
+function submitForm(){
+  // Protection double-submit
+  if(_formSubmitted) return;
+  _formSubmitted = true;
+  var btn = document.querySelector('#step-5 .btn-next');
+  if(btn){ btn.disabled = true; btn.textContent = 'Procesando...'; }
+
+  showStep('confirm');
+  var data = collectData();
+
+  fetch(WEBHOOK,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).then(function(res){
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+  }).catch(function(err){
+    // Webhook Make indisponible — on ne bloque pas le client, mais on sauvegarde les données
+    console.warn('[CCentre] Webhook Make non joignable:', err.message || err);
+    try {
+      var fallback = { ts: new Date().toISOString(), data: data };
+      localStorage.setItem('ccenew_onboarding_fallback', JSON.stringify(fallback));
+      console.info('[CCentre] Données sauvegardées en localStorage (clé: ccenew_onboarding_fallback)');
+    } catch(e) { /* localStorage non disponible (mode privé ou quota) */ }
+  });
+
+  // Redirection vers Stripe après 2,5s
+  setTimeout(function(){
+    window.location.href = STRIPE[state.plan][state.billing];
+  }, 2500);
+}
+
+/* ── UPLOAD ── */
+var uploadFiles = {fotos:[], logo:[]};
+function setupUpload(type){
+  var input = document.getElementById('inp-'+type);
+  var preview = document.getElementById('prev-'+type);
+  if(!input || !preview) return;
+  input.addEventListener('change', function(){
+    Array.from(this.files).forEach(function(file){
+      if(file.size > 10*1024*1024){ alert('Archivo demasiado grande (máx 10 MB): '+file.name); return; }
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        var div = document.createElement('div');
+        var isImg = file.type.startsWith('image/') && !file.name.endsWith('.svg') && !file.name.endsWith('.eps');
+        if(isImg){
+          div.className = 'upload-thumb';
+          var img = document.createElement('img');
+          img.src = ev.target.result;
+          img.alt = file.name;
+          var btn = document.createElement('div');
+          btn.className = 'upload-remove';
+          btn.textContent = '✕';
+          btn.onclick = function(){ div.remove(); };
+          div.appendChild(img);
+          div.appendChild(btn);
+        } else {
+          div.className = 'upload-file-item';
+          div.textContent = file.name;
+          var btn = document.createElement('span');
+          btn.className = 'remove-btn';
+          btn.textContent = '✕';
+          btn.onclick = function(){ div.remove(); };
+          div.appendChild(btn);
+        }
+        preview.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    });
+    input.value = '';
+  });
+  // Drag & drop
+  var zone = input.previousElementSibling;
+  if(zone && zone.classList.contains('upload-zone')){
+    zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.style.borderColor='#0047FF'; });
+    zone.addEventListener('dragleave', function(){ zone.style.borderColor=''; });
+    zone.addEventListener('drop', function(e){
+      e.preventDefault(); zone.style.borderColor='';
+      var fakeFiles = Array.from(e.dataTransfer.files);
+      fakeFiles.forEach(function(file){
+        if(file.size > 10*1024*1024){ alert('Archivo demasiado grande: '+file.name); return; }
+        var reader = new FileReader();
+        reader.onload = function(ev){
+          var div = document.createElement('div');
+          var isImg = file.type.startsWith('image/') && !file.name.endsWith('.svg') && !file.name.endsWith('.eps');
+          if(isImg){
+            div.className = 'upload-thumb';
+            var img = document.createElement('img'); img.src = ev.target.result; img.alt = file.name;
+            var btn = document.createElement('div'); btn.className = 'upload-remove'; btn.textContent = '✕'; btn.onclick = function(){ div.remove(); };
+            div.appendChild(img); div.appendChild(btn);
+          } else {
+            div.className = 'upload-file-item'; div.textContent = file.name;
+            var btn = document.createElement('span'); btn.className = 'remove-btn'; btn.textContent = '✕'; btn.onclick = function(){ div.remove(); };
+            div.appendChild(btn);
+          }
+          preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  setupUpload('fotos');
+  setupUpload('logo');
+});
+
+</script>
+</body>
+</html>
